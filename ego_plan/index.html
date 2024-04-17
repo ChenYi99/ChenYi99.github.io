@@ -102,14 +102,14 @@ Multimodal Large Language Models</h1>
               <a href="https://dingmyu.github.io/">Mingyu Ding</a><sup>3</sup>,
             </span>
             <span class="author-block">
-              <a href="https://bohao-lee.github.io/">Bohao Li</a><sup>1,4</sup>,
+              <a href="https://bohao-lee.github.io/">Bohao Li</a><sup>1</sup>,
             </span>
             <span class="author-block">
               <a>Rui Wang</a>,
             </span>
             <br>
             <span class="author-block">
-              <a>Ruifeng Xu</a><sup>5</sup>,
+              <a>Ruifeng Xu</a><sup>4</sup>,
             </span>
             <span class="author-block">
               <a href="https://scholar.google.com/citations?user=4oXBp9UAAAAJ&hl=en">Ying Shan</a><sup>1</sup>,
@@ -121,10 +121,10 @@ Multimodal Large Language Models</h1>
 
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>Tencent AI Lab,</span>
-            <span class="author-block"><sup>2</sup>The University of Hong Kong,</span>
+            <span class="author-block"><sup>2</sup>The University of Hong Kong,</span> <br>
             <span class="author-block"><sup>3</sup>University of California, Berkeley,</span>
-            <span class="author-block"><sup>4</sup>The Chinese University of Hong Kong, Shenzhen,</span>
-            <span class="author-block"><sup>5</sup>Peng Cheng Laboratory</span>
+<!--            <span class="author-block"><sup>4</sup>The Chinese University of Hong Kong, Shenzhen,</span>-->
+            <span class="author-block"><sup>4</sup>Peng Cheng Laboratory</span>
           </div>
 
           <div class="column has-text-centered">
@@ -226,32 +226,57 @@ Multimodal Large Language Models</h1>
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
+<!--          <p>-->
+<!--            Multimodal Large Language Models (MLLMs), building upon the powerful Large Language Models (LLMs)-->
+<!--            with exceptional reasoning and generalization capability,-->
+<!--            have opened up new avenues for embodied task planning.-->
+<!--            MLLMs excel in their ability to integrate diverse environmental inputs, such as real-time task progress, visual observations, and open-form language instructions, which are-->
+<!--            crucial for executable task planning.-->
+<!--          </p>-->
+
+<!--          <p>-->
+<!--            In this work, we introduce a benchmark with human annotations, <b>EgoPlan-Bench</b>, to quantitatively investigate the potential of MLLMs-->
+<!--            as embodied task planners in real-world scenarios. Our-->
+<!--            benchmark is distinguished by realistic tasks derived from-->
+<!--            real-world videos, a diverse set of actions involving interactions with hundreds of different objects, and complex visual observations from varied environments. We evaluate-->
+<!--            various open-source MLLMs, revealing that these models-->
+<!--            have not yet evolved into embodied planning generalists-->
+<!--            (even GPT-4V).-->
+<!--          </p>-->
+
+<!--          <p>-->
+<!--            We further construct an instruction-tuning-->
+<!--            dataset <b>EgoPlan-IT</b> from videos of human-object interactions, to facilitate the learning of high-level task planning-->
+<!--            in intricate real-world situations. The experiment results-->
+<!--            demonstrate that the model tuned on EgoPlan-IT not only-->
+<!--            significantly improves performance on our benchmark, but-->
+<!--            also effectively acts as embodied planner in simulations.-->
+<!--          </p>-->
+
           <p>
-            Multimodal Large Language Models (MLLMs), building upon the powerful Large Language Models (LLMs)
-            with exceptional reasoning and generalization capability,
-            have opened up new avenues for embodied task planning.
-            MLLMs excel in their ability to integrate diverse environmental inputs, such as real-time task progress, visual observations, and open-form language instructions, which are
-            crucial for executable task planning.
+          Multimodal Large Language Models, combining the remarkable reasoning and generalization capabilities of Large Language Models
+          (LLMs) with the ability to comprehend visual inputs, have opened up
+          new avenues for embodied task planning. Given diverse environmental
+          inputs, including real-time task progress, visual observations, and openform language instructions, a proficient task planner is expected to predict feasible actions, which is a feat inherently achievable by Multimodal
+          Large Language Models (MLLMs).
           </p>
 
           <p>
-            In this work, we introduce a benchmark with human annotations, <b>EgoPlan-Bench</b>, to quantitatively investigate the potential of MLLMs
-            as embodied task planners in real-world scenarios. Our
-            benchmark is distinguished by realistic tasks derived from
-            real-world videos, a diverse set of actions involving interactions with hundreds of different objects, and complex visual observations from varied environments. We evaluate
-            various open-source MLLMs, revealing that these models
-            have not yet evolved into embodied planning generalists
-            (even GPT-4V).
+          In this work, we aim to quantitatively investigate the potential of MLLMs as embodied task planners
+          in real-world scenarios by introducing a benchmark with human annotations named <b>EgoPlan-Bench</b>. Our benchmark is distinguished by realistic
+          tasks derived from real-world videos, a diverse set of actions involving
+          interactions with hundreds of different objects, and complex visual observations from varied scenes. We evaluate a wide range of MLLMs, revealing that these models have not yet evolved into embodied planning
+          generalists (even GPT-4V).
           </p>
 
           <p>
-            We further construct an instruction-tuning
-            dataset <b>EgoPlan-IT</b> from videos of human-object interactions, to facilitate the learning of high-level task planning
-            in intricate real-world situations. The experiment results
-            demonstrate that the model tuned on EgoPlan-IT not only
-            significantly improves performance on our benchmark, but
-            also effectively acts as embodied planner in simulations
+          We further construct an instruction-tuning
+          dataset <b>EgoPlan-IT</b> from videos with human-object interactions, to facilitate the learning of high-level task planning in intricate real-world
+          situations. The experiment results demonstrate that the model tuned on
+          EgoPlan-IT not only significantly improves performance on our benchmark, but can also be applied as a task planner for guiding embodied
+          agents in simulations.
           </p>
+
         </div>
       </div>
     </div>
@@ -278,11 +303,18 @@ Multimodal Large Language Models</h1>
     <img src="./static/images/benchmark_construction.png"
          alt="Benchmark construction."/>
     <p>
-      Overview of the construction pipeline for EgoPlan-Bench based on existing untrimmed egocentric videos with detailed action
-      narrations. (1) We first leverage GPT-4 to identify and decompose the common task goals of actions in a hierarchical way. (2) We then
-      filter out tasks that are either too short or too long. (3) The questions are designed in the form of multiple-choice, where the questions are
-      automatically generated based on task goals, and the options are derived from actions in different steps of the same task. (4) We finally
-      employ human annotators to verify each question to ensure the quality of our benchmark.
+<!--      Overview of the construction pipeline for EgoPlan-Bench based on existing untrimmed egocentric videos with detailed action-->
+<!--      narrations. (1) We first leverage GPT-4 to identify and decompose the common task goals of actions in a hierarchical way. (2) We then-->
+<!--      filter out tasks that are either too short or too long. (3) The questions are designed in the form of multiple-choice, where the questions are-->
+<!--      automatically generated based on task goals, and the options are derived from actions in different steps of the same task. (4) We finally-->
+<!--      employ human annotators to verify each question to ensure the quality of our benchmark.-->
+      Overview of the construction pipeline for EgoPlan-Bench based on existing
+      untrimmed egocentric videos with detailed action narrations. (1) We first leverage
+      GPT-4 to identify task goals through hierarchical reasoning. (2) We then filter task
+      goals based on the requisite number of actions. (3) The questions are designed in the
+      form of multiple-choice, where the questions are automatically generated based on task
+      goals, and the options are derived from different actions under the same task goal. (4)
+      We employ human annotators to verify each question to ensure the benchmark quality.
     </p>
   </div>
 </section>
@@ -290,23 +322,41 @@ Multimodal Large Language Models</h1>
 <section class="section">
   <div class="container is-max-desktop">
     <h2 class="title is-3">Data Statistics</h2>
+<!--    <p>-->
+<!--      Our benchmark comprises a total-->
+<!--      of 3,355 QA pairs, with 2,432 derived from Epic-Kitchen-->
+<!--      egocentric videos and 923 from Ego4D.-->
+<!--      Drawing upon the attributes of the utilized egocentric video sources, our benchmark exhibits three main-->
+<!--      characteristics. <b>1) Realism of Tasks:</b> The tasks are extrapolated from authentic real-world videos, offering a closer-->
+<!--      reflection of daily human needs and showcasing greater variety than artificially constructed tasks.-->
+<!--      <b>2) Diversity of Actions:</b> The benchmark involves a diverse set of actions, requiring interaction with hundreds of different objects and-->
+<!--      extending beyond basic manipulation skills such as picking-->
+<!--      and placing items. <b>3) Intricacy of Visual Observations:</b>-->
+<!--      The visual observations come from various, often distinct-->
+<!--      real-world environments, where objects vary in appearance,-->
+<!--      state, and placement.-->
+<!--    </p>-->
+
+
     <p>
       Our benchmark comprises a total
-      of 3,355 QA pairs, with 2,432 derived from Epic-Kitchen
-      egocentric videos and 923 from Ego4D.
+      of 3,355 QA pairs.
       Drawing upon the attributes of the utilized egocentric video sources, our benchmark exhibits three main
-      characteristics. <b>1) Realism of Tasks:</b> The tasks are extrapolated from authentic real-world videos, offering a closer
-      reflection of daily human needs and showcasing greater variety than artificially constructed tasks.
-      <b>2) Diversity of Actions:</b> The benchmark involves a diverse set of actions, requiring interaction with hundreds of different objects and
-      extending beyond basic manipulation skills such as picking
-      and placing items. <b>3) Intricacy of Visual Observations:</b>
-      The visual observations come from various, often distinct
-      real-world environments, where objects vary in appearance,
-      state, and placement.
+      characteristics.
+      <b>1)Realism of Tasks:</b> The tasks are extrapolated from authentic real-world videos,
+      offering a closer reflection of daily human needs and showcasing greater variety
+      than artificially constructed tasks. <b>2) Diversity of Actions:</b> The benchmark
+      involves a diverse set of actions, requiring interaction with hundreds of different objects and extending beyond basic manipulation skills such as picking and
+      placing items. <b>3) Intricacy of Visual Observations:</b> The visual observations
+      come across various real-world scenes, where objects vary in appearance, state,
+      and placement.
     </p>
+
+
     <br>
     <div class="columns is-centered">
       <div class="column">
+
         <!-- Evaluation Data Statistics. -->
         <div class="content has-text-centered">
           <img src="./static/images/data_statistics.png" width="78.5%"
@@ -316,11 +366,19 @@ Multimodal Large Language Models</h1>
           </p>
         </div>
         <!--/ Evaluation Data Statistics. -->
+      </div>
+    </div>
+    <!--/ Matting. -->
 
+    <div class="columns is-centered">
+      <div class="column">
+        <br>
+        <br>
         <!-- Task Goal Distribution. -->
         <div class="content has-text-centered">
-          <img src="./static/images/task_goal_distribution.png" width="78.5%"
+          <img src="./static/images/task_goal_distribution.png" width="100%"
          alt="Task Goal Distribution."/>
+          <br><br>
           <p>
             b) Wordcloud of verbs in task goals of EgoPlan-Bench.
           </p>
@@ -337,7 +395,8 @@ Multimodal Large Language Models</h1>
           <p>
 <!--            The top 20 most common root verbs (inner circle) and-->
 <!--            their top 8 direct noun objects (outer circle) in the candidate actions from the EgoPlan-Bench (log rescaled).-->
-            c) Distribution of the verbs and nouns in the candidate actions from the EgoPlan-Bench (log rescaled).
+<!--            c) Distribution of the verbs and noun objects in the candidate actions from the EgoPlan-Bench (log rescaled).-->
+            c) Top 20 verbs with top 8 related objects in EgoPlan-<br>Bench candidate actions.
           </p>
         </div>
       </div>
@@ -355,7 +414,7 @@ Multimodal Large Language Models</h1>
     <div class="container is-max-desktop">
       <h2 class="title is-3">Evaluation Results</h2>
       <p>
-        We evaluate a wide range of open-source MLLMs. The results indicate that our EgoPlan-Bench
+        We evaluate a wide range of MLLMs. The results indicate that our EgoPlan-Bench
         poses significant challenges for existing MLLMs, and there
         is still a long way to go before these models evolve into
         generalist embodied task planners.
