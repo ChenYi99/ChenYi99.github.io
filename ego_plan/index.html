@@ -171,12 +171,21 @@ Multimodal Large Language Models</h1>
               </span>
               <!-- Dataset Link. -->
               <span class="link-block">
-                <a href="https://drive.google.com/drive/folders/1OUnQzG79kxhJdaquBKLv1rrKz36TTkP6?usp=sharing"
+                <a href="https://drive.google.com/drive/folders/1qVtPzhHmCgdQ5JlMeAL3OZtvbHaXktTo?usp=sharing"
                    class="external-link button is-normal is-rounded is-dark">
                   <span class="icon">
-                      <i class="far fa-images"></i>
+                      <i class="fa fa-database"></i>
                   </span>
                   <span>Data</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://huggingface.co/spaces/ChenYi99/EgoPlan-Bench_Leaderboard"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fa fa-trophy"></i>
+                  </span>
+                  <span>Leaderboard</span>
                 </a>
               </span>
             </div>
@@ -193,11 +202,10 @@ Multimodal Large Language Models</h1>
     <img src="./static/images/benchmark_overview.png"
          alt="Benchmark overview."/>
     <div class="content has-text-justified">
-        Our EgoPlan-Bench evaluates Egocentric Embodied <b>Planning</b>, where a model predicts the next feasible action by taking a video
-        showing task progress, current visual observation and language instruction as inputs. In contrast, existing egocentric video QA benchmarks
-        mainly evaluate <b>Comprehension</b>, where a model answers questions based on the spatial and temporal understanding of the entire video.
-        The key difference is that the setting of EgoPlan-Bench better aligns with real-world embodied AI applications, as the model’s output can
-        directly serve as plans for agents to execute tasks in real environments.
+        Our EgoPlan-Bench evaluates <b>Planning</b>, where a model predicts the next feasible action plan by taking a video showing task progress,
+        current visual observation, and open-form task goal as inputs like humans.
+        In contrast, the egocentric-video-based QA examples from existing benchmarks mainly evaluate
+        <b>Comprehension</b>, where a model answers questions based on the spatial and temporal understanding of the entire video.
     </div>
   </div>
 </div>
@@ -227,57 +235,17 @@ Multimodal Large Language Models</h1>
       <div class="column is-four-fifths">
         <h2 class="title is-3">Abstract</h2>
         <div class="content has-text-justified">
-<!--          <p>-->
-<!--            Multimodal Large Language Models (MLLMs), building upon the powerful Large Language Models (LLMs)-->
-<!--            with exceptional reasoning and generalization capability,-->
-<!--            have opened up new avenues for embodied task planning.-->
-<!--            MLLMs excel in their ability to integrate diverse environmental inputs, such as real-time task progress, visual observations, and open-form language instructions, which are-->
-<!--            crucial for executable task planning.-->
-<!--          </p>-->
+          The pursuit of artificial general intelligence (AGI) has been accelerated by Multimodal Large Language Models (MLLMs),
+          which exhibit superior reasoning, generalization capabilities, and proficiency in processing multimodal inputs.
+          A crucial milestone in the evolution of AGI is the attainment of human-level planning, a fundamental ability for making informed decisions in complex environments,
+          and solving a wide range of real-world problems. Despite the impressive advancements in MLLMs, a question remains: <b>How far are current MLLMs from achieving human-level planning?</b>
 
-<!--          <p>-->
-<!--            In this work, we introduce a benchmark with human annotations, <b>EgoPlan-Bench</b>, to quantitatively investigate the potential of MLLMs-->
-<!--            as embodied task planners in real-world scenarios. Our-->
-<!--            benchmark is distinguished by realistic tasks derived from-->
-<!--            real-world videos, a diverse set of actions involving interactions with hundreds of different objects, and complex visual observations from varied environments. We evaluate-->
-<!--            various open-source MLLMs, revealing that these models-->
-<!--            have not yet evolved into embodied planning generalists-->
-<!--            (even GPT-4V).-->
-<!--          </p>-->
-
-<!--          <p>-->
-<!--            We further construct an instruction-tuning-->
-<!--            dataset <b>EgoPlan-IT</b> from videos of human-object interactions, to facilitate the learning of high-level task planning-->
-<!--            in intricate real-world situations. The experiment results-->
-<!--            demonstrate that the model tuned on EgoPlan-IT not only-->
-<!--            significantly improves performance on our benchmark, but-->
-<!--            also effectively acts as embodied planner in simulations.-->
-<!--          </p>-->
-
-          <p>
-          Multimodal Large Language Models, combining the remarkable reasoning and generalization capabilities of Large Language Models
-          (LLMs) with the ability to comprehend visual inputs, have opened up
-          new avenues for embodied task planning. Given diverse environmental
-          inputs, including real-time task progress, visual observations, and open-form language instructions, a proficient task planner is expected to predict feasible actions, which is a feat inherently achievable by Multimodal
-          Large Language Models (MLLMs).
-          </p>
-
-          <p>
-          In this work, we aim to quantitatively investigate the potential of MLLMs as embodied task planners
-          in real-world scenarios by introducing a benchmark with human annotations named <b>EgoPlan-Bench</b>. Our benchmark is distinguished by realistic
-          tasks derived from real-world videos, a diverse set of actions involving
-          interactions with hundreds of different objects, and complex visual observations from varied scenes. We evaluate a wide range of MLLMs, revealing that these models have not yet evolved into embodied planning
-          generalists (even GPT-4V).
-          </p>
-
-          <p>
-          We further construct an instruction-tuning
-          dataset <b>EgoPlan-IT</b> from videos with human-object interactions, to facilitate the learning of high-level task planning in intricate real-world
-          situations. The experiment results demonstrate that the model tuned on
-          EgoPlan-IT not only significantly improves performance on our benchmark, but can also be applied as a task planner for guiding embodied
-          agents in simulations.
-          </p>
-
+          To shed light on this question, we introduce EgoPlan-Bench, a comprehensive benchmark to evaluate the planning abilities of MLLMs in real-world scenarios from an egocentric perspective, mirroring human perception.
+          EgoPlan-Bench emphasizes the evaluation of planning capabilities of MLLMs, featuring realistic tasks, diverse action plans, and intricate visual observations.
+          Our rigorous evaluation of a wide range of MLLMs reveals that EgoPlan-Bench poses significant challenges,
+          highlighting a substantial scope for improvement in MLLMs to achieve human-level task planning.
+          To facilitate this advancement, we further present EgoPlan-IT, a specialized instruction-tuning dataset that effectively enhances model performance on EgoPlan-Bench.
+          We have made all codes, data, and a maintained benchmark leaderboard available to advance future research.
         </div>
       </div>
     </div>
@@ -340,14 +308,13 @@ Multimodal Large Language Models</h1>
 
 
     <p>
-      Our benchmark comprises a total
-      of 3,355 QA pairs.
-      Drawing upon the attributes of the utilized egocentric video sources, our benchmark exhibits three main
-      characteristics.
+      The evaluation data of EgoPlan-Bench comprises a total of 4,939 multiple-choice questions,
+      which are divided into two subsets: EgoPlan-Val for validation and EgoPlan-Test for testing.
+      Our benchmark exhibits three main characteristics:
       <b>1)Realism of Tasks:</b> The tasks are extrapolated from authentic real-world videos,
       offering a closer reflection of daily human needs and showcasing greater variety
-      than artificially constructed tasks. <b>2) Diversity of Actions:</b> The benchmark
-      involves a diverse set of actions, requiring interaction with hundreds of different objects and extending beyond basic manipulation skills such as picking and
+      than artificially constructed tasks. <b>2) Diversity of Action Plans:</b> The benchmark
+      involves a diverse set of action plans, requiring interaction with hundreds of different objects and extending beyond basic manipulation skills such as picking and
       placing items. <b>3) Intricacy of Visual Observations:</b> The visual observations
       come across various real-world scenes, where objects vary in appearance, state,
       and placement.
@@ -377,11 +344,11 @@ Multimodal Large Language Models</h1>
         <br>
         <!-- Task Goal Distribution. -->
         <div class="content has-text-centered">
-          <img src="./static/images/task_goal_distribution.png" width="100%"
+          <img src="./static/images/task_goal_distribution.png" width="90%"
          alt="Task Goal Distribution."/>
           <br><br>
           <p>
-            b) Wordcloud of verbs in task goals of EgoPlan-Bench.
+            b) Wordcloud of task goals in EgoPlan-Bench questions.
           </p>
         </div>
         <!--/ Task Goal Distribution. -->
@@ -390,14 +357,10 @@ Multimodal Large Language Models</h1>
       <!-- Action Distribution. -->
       <div class="column">
         <div class="content has-text-justified">
-          <img src="./static/images/action_distribution.png" width="100%"
+          <img src="./static/images/action_distribution.png" width="90%"
          alt="Action distribution."/>
-
           <p>
-<!--            The top 20 most common root verbs (inner circle) and-->
-<!--            their top 8 direct noun objects (outer circle) in the candidate actions from the EgoPlan-Bench (log rescaled).-->
-<!--            c) Distribution of the verbs and noun objects in the candidate actions from the EgoPlan-Bench (log rescaled).-->
-            c) Top 20 verbs with top 8 related objects in EgoPlan-<br>Bench candidate actions.
+            c) Top 20 verbs with top 8 related objects in EgoPlan-<br>Bench candidate action plans.
           </p>
         </div>
       </div>
@@ -415,49 +378,107 @@ Multimodal Large Language Models</h1>
     <div class="container is-max-desktop">
       <h2 class="title is-3">Evaluation Results</h2>
       <p>
-        We evaluate a wide range of MLLMs. The results indicate that our EgoPlan-Bench
-        poses significant challenges for existing MLLMs, and there
-        is still a long way to go before these models evolve into
-        generalist embodied task planners.
-    </p>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item">
-          <img src="static/images/evaluation_results_1.png" alt="Failure Case 1" width="100%"/>
-          <h2 class="title is-6 has-text-centered">
-            Failure Type-1: Tendency to predict actions with a higher overlap of words with the task goal.
-          </h2>
+        We evaluate a total of 28 MLLMs on our benchmark. The results indicate that our benchmark poses
+        significant challenges for existing MLLMs, and there is still a long way to go before these models
+        evolve into human-level task planners.
+
+        We further analyze three main reasons for this limitation, including 1) insufficient integration of visual modality,
+        2) omitting key state changes in task progress, and 3) inadequate application of world knowledge.
+      </p>
+
+      <div class="columns is-centered">
+        <div class="column">
+          <br>
+          <br>
+          <div class="content has-text-justified">
+            <img src="./static/images/goal_answer_similarity_impact.png" width="90%"
+           alt="Impact of Goal-Answer Similarity."/>
+<!--            <br><br>-->
+            <p>
+              a) Impact of goal-answer similarity on model performance.
+            </p>
+          </div>
         </div>
-        <div class="item">
-          <img src="static/images/evaluation_results_2.png" alt="Failure Case 2" width="100%"/>
-          <h2 class="title is-6 has-text-centered">
-            Failure Type-1: Tendency to predict actions with a higher overlap of words with the task goal.
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/evaluation_results_3.png" alt="Failure Case 3" width="100%"/>
-          <h2 class="title is-6 has-text-centered">
-            Failure Type-2: Repeating actions that have already been completed in the observed task progress.
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/evaluation_results_4.png" alt="Failure Case 4" width="100%"/>
-          <h2 class="title is-6 has-text-centered">
-            Failure Type-2: Repeating actions that have already been completed in the observed task progress.
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/evaluation_results_6.png" alt="Failure Case 5" width="100%"/>
-          <h2 class="title is-6 has-text-centered">
-            Failure Type-3: Neglecting crucial object states in visual observations.
-          </h2>
-        </div>
-        <div class="item">
-          <img src="static/images/evaluation_results_5.png" alt="Failure Case 6" width="100%"/>
-          <h2 class="title is-6 has-text-centered">
-            Failure Type-3: Neglecting crucial object states in visual observations.
-          </h2>
+
+
+        <div class="column">
+          <br>
+          <br>
+          <div class="content has-text-justified">
+            <img src="./static/images/progress_len_impact.png" width="90%"
+           alt="Impact of Task Progress Length."/>
+            <p>
+              b) Impact of task progress length on model performance.
+            </p>
+          </div>
         </div>
       </div>
+
+      <div id="results-carousel" class="carousel results-carousel">
+        <div class="item">
+          <img src="static/images/evaluation_results_1.png" alt="Failure Type-1" width="100%"/>
+          <h2 class="title is-6 has-text-centered">
+            Failure Type-1: Insufficient integration of visual modality.
+          </h2>
+        </div>
+        <div class="item">
+          <img src="static/images/evaluation_results_4.png" alt="Failure Type-2" width="100%"/>
+          <h2 class="title is-6 has-text-centered">
+            Failure Type-2: Omitting key state changes in task progress.
+          </h2>
+        </div>
+        <div class="item">
+          <img src="static/images/evaluation_results_5.png" alt="Failure Type-3" width="100%"/>
+          <h2 class="title is-6 has-text-centered">
+            Failure Type-3: Inadequate application of world knowledge.
+          </h2>
+        </div>
+
+<!--        <div class="item">-->
+<!--          <img src="static/images/evaluation_results_1.png" alt="Failure Case 1" width="100%"/>-->
+<!--          <h2 class="title is-6 has-text-centered">-->
+<!--            Failure Type-1: Tendency to predict actions with a higher overlap of words with the task goal.-->
+<!--          </h2>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--          <img src="static/images/evaluation_results_2.png" alt="Failure Case 2" width="100%"/>-->
+<!--          <h2 class="title is-6 has-text-centered">-->
+<!--            Failure Type-1: Tendency to predict actions with a higher overlap of words with the task goal.-->
+<!--          </h2>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--          <img src="static/images/evaluation_results_3.png" alt="Failure Case 3" width="100%"/>-->
+<!--          <h2 class="title is-6 has-text-centered">-->
+<!--            Failure Type-2: Repeating actions that have already been completed in the observed task progress.-->
+<!--          </h2>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--          <img src="static/images/evaluation_results_4.png" alt="Failure Case 4" width="100%"/>-->
+<!--          <h2 class="title is-6 has-text-centered">-->
+<!--            Failure Type-2: Repeating actions that have already been completed in the observed task progress.-->
+<!--          </h2>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--          <img src="static/images/evaluation_results_6.png" alt="Failure Case 5" width="100%"/>-->
+<!--          <h2 class="title is-6 has-text-centered">-->
+<!--            Failure Type-3: Neglecting crucial object states in visual observations.-->
+<!--          </h2>-->
+<!--        </div>-->
+<!--        <div class="item">-->
+<!--          <img src="static/images/evaluation_results_5.png" alt="Failure Case 6" width="100%"/>-->
+<!--          <h2 class="title is-6 has-text-centered">-->
+<!--            Failure Type-3: Neglecting crucial object states in visual observations.-->
+<!--          </h2>-->
+<!--        </div>-->
+      </div>
+
+<!--      <script-->
+<!--        type="module"-->
+<!--        src="https://gradio.s3-us-west-2.amazonaws.com/3.27.0/gradio.js"-->
+<!--      ></script>-->
+
+<!--      <gradio-app src="https://chenyi99-egoplan-bench-leaderboard.hf.space"></gradio-app>-->
+
     </div>
   </div>
 </section>
@@ -465,156 +486,31 @@ Multimodal Large Language Models</h1>
 <!-- Instruction Tuning. -->
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3">Enhancing EgoPlan Capability by Instruction Tuning</h2>
+    <h2 class="title is-3">Enhancing Human-Level Planning through Instruction Tuning</h2>
     <p>
-      We further construct EgoPlan-IT, an instruction-tuning dataset, to facilitate the learning of high-level
-      task planning from human videos. The model tuned on
-      EgoPlan-IT not only exhibits a significant performance
-      enhancement on our benchmark, but also shows
-      potential as a task planner for an embodied agent to complete long-horizon tasks within a simulated environment.
+      Given the suboptimal performance of the evaluated MLLMs on EgoPlan-Bench, we investigate enhancing
+      the human-level planning capabilities of MLLMs through instruction-tuning. Specifically, we
+      construct an instruction-tuning dataset, EgoPlan-IT, to align MLLMs with real-world needs of task
+      planning.
+      The model tuned on EgoPlan-IT demonstrates a significant and robust performance improvement on the proposed benchmark,
+      verifying the effectiveness of our data.
+      <br><br>
+
+<!--      We further construct EgoPlan-IT, an instruction-tuning dataset, to facilitate the learning of high-level-->
+<!--      task planning from human videos. The model tuned on-->
+<!--      EgoPlan-IT not only exhibits a significant performance-->
+<!--      enhancement on our benchmark, but also shows-->
+<!--      potential as a task planner for an embodied agent to complete long-horizon tasks within a simulated environment.-->
     </p>
-    <img src="./static/images/simulation_case.png"
-         alt="Simulation case."/>
+    <p align="center">
+    <img src="./static/images/instruction_tuning_results.png"
+         alt="Simulation case."
+         width="60%"/>
+    </p>
   </div>
 </section>
 <!--/ Instruction Tuning. -->
 
-
-<!--<section class="section">-->
-<!--  <div class="container is-max-desktop">-->
-
-<!--    <div class="columns is-centered">-->
-
-<!--      &lt;!&ndash; Visual Effects. &ndash;&gt;-->
-<!--      <div class="column">-->
-<!--        <div class="content">-->
-<!--          <h2 class="title is-3">Visual Effects</h2>-->
-<!--          <p>-->
-<!--            Using <i>nerfies</i> you can create fun visual effects. This Dolly zoom effect-->
-<!--            would be impossible without nerfies since it would require going through a wall.-->
-<!--          </p>-->
-<!--          <video id="dollyzoom" autoplay controls muted loop playsinline height="100%">-->
-<!--            <source src="./static/videos/dollyzoom-stacked.mp4"-->
-<!--                    type="video/mp4">-->
-<!--          </video>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      &lt;!&ndash;/ Visual Effects. &ndash;&gt;-->
-
-<!--      &lt;!&ndash; Matting. &ndash;&gt;-->
-<!--      <div class="column">-->
-<!--        <h2 class="title is-3">Matting</h2>-->
-<!--        <div class="columns is-centered">-->
-<!--          <div class="column content">-->
-<!--            <p>-->
-<!--              As a byproduct of our method, we can also solve the matting problem by ignoring-->
-<!--              samples that fall outside of a bounding box during rendering.-->
-<!--            </p>-->
-<!--            <video id="matting-video" controls playsinline height="100%">-->
-<!--              <source src="./static/videos/matting.mp4"-->
-<!--                      type="video/mp4">-->
-<!--            </video>-->
-<!--          </div>-->
-
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash;/ Matting. &ndash;&gt;-->
-
-<!--    &lt;!&ndash; Animation. &ndash;&gt;-->
-<!--    <div class="columns is-centered">-->
-<!--      <div class="column is-full-width">-->
-<!--        <h2 class="title is-3">Animation</h2>-->
-
-<!--        &lt;!&ndash; Interpolating. &ndash;&gt;-->
-<!--        <h3 class="title is-4">Interpolating states</h3>-->
-<!--        <div class="content has-text-justified">-->
-<!--          <p>-->
-<!--            We can also animate the scene by interpolating the deformation latent codes of two input-->
-<!--            frames. Use the slider here to linearly interpolate between the left frame and the right-->
-<!--            frame.-->
-<!--          </p>-->
-<!--        </div>-->
-<!--        <div class="columns is-vcentered interpolation-panel">-->
-<!--          <div class="column is-3 has-text-centered">-->
-<!--            <img src="./static/images/interpolate_start.jpg"-->
-<!--                 class="interpolation-image"-->
-<!--                 alt="Interpolate start reference image."/>-->
-<!--            <p>Start Frame</p>-->
-<!--          </div>-->
-<!--          <div class="column interpolation-video-column">-->
-<!--            <div id="interpolation-image-wrapper">-->
-<!--              Loading...-->
-<!--            </div>-->
-<!--            <input class="slider is-fullwidth is-large is-info"-->
-<!--                   id="interpolation-slider"-->
-<!--                   step="1" min="0" max="100" value="0" type="range">-->
-<!--          </div>-->
-<!--          <div class="column is-3 has-text-centered">-->
-<!--            <img src="./static/images/interpolate_end.jpg"-->
-<!--                 class="interpolation-image"-->
-<!--                 alt="Interpolation end reference image."/>-->
-<!--            <p class="is-bold">End Frame</p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--        <br/>-->
-<!--        &lt;!&ndash;/ Interpolating. &ndash;&gt;-->
-
-<!--        &lt;!&ndash; Re-rendering. &ndash;&gt;-->
-<!--        <h3 class="title is-4">Re-rendering the input video</h3>-->
-<!--        <div class="content has-text-justified">-->
-<!--          <p>-->
-<!--            Using <span class="dnerf">Nerfies</span>, you can re-render a video from a novel-->
-<!--            viewpoint such as a stabilized camera by playing back the training deformations.-->
-<!--          </p>-->
-<!--        </div>-->
-<!--        <div class="content has-text-centered">-->
-<!--          <video id="replay-video"-->
-<!--                 controls-->
-<!--                 muted-->
-<!--                 preload-->
-<!--                 playsinline-->
-<!--                 width="75%">-->
-<!--            <source src="./static/videos/replay.mp4"-->
-<!--                    type="video/mp4">-->
-<!--          </video>-->
-<!--        </div>-->
-<!--        &lt;!&ndash;/ Re-rendering. &ndash;&gt;-->
-
-<!--      </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash;/ Animation. &ndash;&gt;-->
-
-
-<!--    &lt;!&ndash; Concurrent Work. &ndash;&gt;-->
-<!--    <div class="columns is-centered">-->
-<!--      <div class="column is-full-width">-->
-<!--        <h2 class="title is-3">Related Links</h2>-->
-
-<!--        <div class="content has-text-justified">-->
-<!--          <p>-->
-<!--            There's a lot of excellent work that was introduced around the same time as ours.-->
-<!--          </p>-->
-<!--          <p>-->
-<!--            <a href="https://arxiv.org/abs/2104.09125">Progressive Encoding for Neural Optimization</a> introduces an idea similar to our windowed position encoding for coarse-to-fine optimization.-->
-<!--          </p>-->
-<!--          <p>-->
-<!--            <a href="https://www.albertpumarola.com/research/D-NeRF/index.html">D-NeRF</a> and <a href="https://gvv.mpi-inf.mpg.de/projects/nonrigid_nerf/">NR-NeRF</a>-->
-<!--            both use deformation fields to model non-rigid scenes.-->
-<!--          </p>-->
-<!--          <p>-->
-<!--            Some works model videos with a NeRF by directly modulating the density, such as <a href="https://video-nerf.github.io/">Video-NeRF</a>, <a href="https://www.cs.cornell.edu/~zl548/NSFF/">NSFF</a>, and <a href="https://neural-3d-video.github.io/">DyNeRF</a>-->
-<!--          </p>-->
-<!--          <p>-->
-<!--            There are probably many more by the time you are reading this. Check out <a href="https://dellaert.github.io/NeRF/">Frank Dellart's survey on recent NeRF papers</a>, and <a href="https://github.com/yenchenlin/awesome-NeRF">Yen-Chen Lin's curated list of NeRF papers</a>.-->
-<!--          </p>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--    </div>-->
-<!--    &lt;!&ndash;/ Concurrent Work. &ndash;&gt;-->
-
-<!--  </div>-->
-<!--</section>-->
 
 
 <section class="section" id="BibTeX">
