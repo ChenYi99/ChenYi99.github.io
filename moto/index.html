@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Policy Adaptation from Foundation Model Feedback">
+  <meta name="keywords" content="Policy Adaptation, Foundation Models">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moto</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-FV4ZJ9PVSV"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-FV4ZJ9PVSV');
+  </script>
+
+
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-2 publication-title">Moto: Latent Motion Token as the Bridging Language for Robot Manipulation</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=zh-CN&view_op=list_works&gmla=ABOlHiz5P0DGksLQAtkL0Wx2-Lz9aEJs864Y6LumND0NOTbpqMRf01YqKmxsAq5PFNZ2wOMCEJf-BJOUf6bVkhd3XK4&user=3ep5ODoAAAAJ">Yi Chen</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="https://geyuying.github.io/">Yuying Ge</a><sup>2</sup>,</span>
+            <span class="author-block">
+              <a href=https://liyizhuo.com/>Yizhuo Li</a><sup>1,2</sup>,
+            </span>
+            <span class="author-block">
+              <a href=https://geyixiao.com/>Yixiao Ge</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://dingmyu.github.io/">Mingyu Ding</a><sup>3</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://scholar.google.com/citations?user=4oXBp9UAAAAJ&hl=en">Ying Shan</a><sup>2</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://xh-liu.github.io/">Xihui Liu</a><sup>1</sup>
+            </span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>The University of Hong Kong,</span>
+            <span class="author-block"><sup>2</sup>ARC Lab, Tencent PCG,</span>
+            <span class="author-block"><sup>3</sup>University of California, Berkeley</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+<!--              <span class="link-block">-->
+<!--                <a href="https://arxiv.org/pdf/2011.12948"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="fas fa-file-pdf"></i>-->
+<!--                  </span>-->
+<!--                  <span>Paper</span>-->
+<!--                </a>-->
+<!--              </span>-->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Video Link. -->
+<!--              <span class="link-block">-->
+<!--                <a href="https://www.youtube.com/watch?v=MrKrnHhk8IA"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="fab fa-youtube"></i>-->
+<!--                  </span>-->
+<!--                  <span>Video</span>-->
+<!--                </a>-->
+<!--              </span>-->
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href="https://github.com/ChenYi99/Moto"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (coming soon)</span>
+                  </a>
+              </span>
+              <!-- Dataset Link. -->
+<!--              <span class="link-block">-->
+<!--                <a href="https://drive.google.com/drive/folders/1qVtPzhHmCgdQ5JlMeAL3OZtvbHaXktTo?usp=sharing"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="fa fa-database"></i>-->
+<!--                  </span>-->
+<!--                  <span>Data</span>-->
+<!--                </a>-->
+<!--              </span>-->
+<!--              <span class="link-block">-->
+<!--                <a href="https://huggingface.co/spaces/ChenYi99/EgoPlan-Bench_Leaderboard"-->
+<!--                   class="external-link button is-normal is-rounded is-dark">-->
+<!--                  <span class="icon">-->
+<!--                      <i class="fa fa-trophy"></i>-->
+<!--                  </span>-->
+<!--                  <span>Leaderboard</span>-->
+<!--                </a>-->
+<!--              </span>-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero teaser">
+  <div class="container is-max-widescreen">
+    <div class="hero-body">
+      <div class="container">
+        <div class="columns is-vcentered  is-centered">
+        </br>
+            <video id="teaser" autoplay muted playsinline width="100%" style="border-radius: 10px">
+              <source src="media/videos/teaser_live.mp4"
+                      type="video/mp4">
+            </video>
+        </br>
+          </br>
+        </div>
+        <br>
+        <h2 class="content has-text-justified">
+            The overview of <b>Moto</b>, which utilizes Latent <b>Mo</b>tion <b>To</b>kens as a bridging "language" for autoregressive pretraining on video data. The Moto-GPT pre-trained through next motion token prediction learns a wealth of motion-related prior knowledge from videos, which can be seamlessly transferred to enhance downstream robot manipulation tasks with significant performance gains.
+        </h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          Recent developments in Large Language Models (LLMs) pre-trained on extensive corpora have shown significant success in various natural language processing (NLP) tasks with minimal fine-tuning.
+            This success offers new promise for robotics, which has long been constrained by the high cost of action-labeled data. We ask: given the abundant video data containing interaction-related knowledge available as a rich "corpus", <b><i>can a similar generative pre-training approach be effectively applied to enhance robot learning?</i></b> The key challenge is to identify an effective representation for autoregressive pre-training that benefits robot manipulation tasks.
+          Inspired by the way humans learn new skills through observing dynamic environments, we propose that effective robotic learning should emphasize motion-related knowledge, which is closely tied to low-level actions and is hardware-agnostic, facilitating the transfer of learned motions to actual robot actions.
+          To this end, we introduce <b>Moto</b>, which converts video content into latent <b>Mo</b>tion <b>To</b>ken sequences by a Latent Motion Tokenizer, learning a bridging "language" of motion from videos in an unsupervised manner.
+          We pre-train Moto-GPT through motion token autoregression, enabling it to capture diverse visual motion knowledge. After pre-training, Moto-GPT demonstrates the promising ability to produce semantically interpretable motion tokens, predict plausible motion trajectories, and assess trajectory rationality through output likelihood.
+          To transfer learned motion priors to real robot actions, we implement a co-fine-tuning strategy that seamlessly bridges latent motion token prediction and real robot control. Extensive experiments show that the fine-tuned Moto-GPT exhibits superior robustness and efficiency on robot manipulation benchmarks, underscoring its effectiveness in transferring knowledge from video data to downstream visual manipulations.
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Paper video. -->
+<!--    <div class="columns is-centered has-text-centered">-->
+<!--      <div class="column is-four-fifths">-->
+<!--        <h2 class="title is-3">Video</h2>-->
+<!--        <div class="publication-video">-->
+<!--          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"-->
+<!--                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+    <!--/ Paper video. -->
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <hr>
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">Method</h2>
+    </div>
+    <h2 class="title is-4">&#x2022; Three Training Stages of Moto</h2>
+    <video id="model_overview" autoplay muted playsinline width="100%" style="border-radius: 10px">
+          <source src="media/videos/model_overview_live.mp4"
+                  type="video/mp4">
+    </video>
+<!--    <img src="media/figures/model_overview.png"-->
+<!--         alt="Model overview."/>-->
+    <p>
+        Overview of Moto's three training stages: (1) The Latent Motion Tokenizer encodes key visual motions between video frames into compact latent tokens in an unsupervised manner using pure video data. (2) Moto-GPT is pre-trained with autoregressive motion token prediction to learn motion priors from video-instruction pairs. (3) Moto-GPT is co-fine-tuned on action-labeled trajectories to predict robot actions based on the output of learnable action query tokens while maintaining the next-motion-token prediction objective.
+    </p>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-4">&#x2022; Latent Motion Tokenizer</h2>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <br>
+          <img src="media/figures/latent_motion_tokenizer.png" width="72%"
+         alt="Latent Motion Tokenizer."/>
+        </div>
+        <p>
+          The Latent Motion Tokenizer produces discrete motion tokens from two consecutive video frames. It regularizes the decoder to reconstruct the second frame based on the first one and the discrete tokens, effectively capturing the motion between frames.
+        </p>
+
+      </div>
+
+      <div class="column">
+        <div class="content has-text-centered">
+          <br>
+          <img src="media/figures/reconstruction_quality.png" width="100%"
+         alt="Reconstruction Quality."/>
+          <br>
+          </div>
+        <div class="content has-text-justified">
+          <p>
+            Qualitative examples of reconstruction results, where discrete motion tokens obtained from the Latent Motion Tokenizer based on the initial and next frame, are fed into the decoder along with the initial frame to reconstruct the target frame.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <hr>
+    <div class="columns is-centered has-text-centered">
+      <h2 class="title is-3">Experiments</h2>
+    </div>
+    <p>
+        To comprehensively evaluate the effectiveness of Moto, we study three key experimental questions:
+      <ul>
+        <li><b>Q1 (Interpretability):</b> Does the Latent Motion Tokenizer learn interpretable latent motion tokens that effectively represent visual motions from videos?</li>
+        <li><b>Q2 (Motion Priors):</b>  Does Moto-GPT gain meaningful priors of motion trajectories through autoregressive pre-training on latent motion token sequences?</li>
+        <li><b>Q3 (Performance):</b>  Can the motion priors be transferred to enhance policy performance in robot manipulation benchmarks through efficient fine-tuning?</li>
+      </ul>
+    </p>
+
+    <br><br>
+    <h2 class="title is-4">&#x2022; Latent Motion Token as an Interpretable Motion Language (Q1)</h2>
+    <img src="media/figures/motion_token_controllability.png"
+         alt="Interpretability of latent motion tokens."/>
+    <br><br>
+    <p>
+        Visualization of latent motion token interpretability. Each row displays reconstructed frames from the same initial frame using different latent motion tokens, while each column shows frames reconstructed from the same latent motion tokens with varying initial frames. The latent motion tokens exhibit consistent (see columns) and discriminative (see rows) semantics, despite being trained in an unsupervised manner.
+    </p>
+    <br><br>
+    <img src="media/figures/video_imitation_generation.png"
+         alt="Video imitation generation."/>
+    <br><br>
+    <p>
+        Video imitation generation via latent motion tokens, where a sequence of latent motion tokens from a demonstration video are extracted by the Latent Motion Tokenizer, and are decoded into a new video. This generated video is based on a different initial frame while preserving the original robot movement semantics.
+    </p>
+  </div>
+</section>
+
+
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-4">&#x2022; Pre-trained Moto-GPT as a Useful Prior Learner (Q2)</h2>
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <br>
+          <img src="media/figures/future_anticipation.png" width="100%"
+         alt="Moto-GPT for future anticipation."/>
+        </div>
+        <br>
+        <p>
+          Visualization of video trajectories generated from a sequence of latent motion tokens, which are predicted by the pre-trained Moto-GPT given different language instructions.
+        </p>
+
+      </div>
+
+      <div class="column">
+        <div class="content has-text-centered">
+          <br>
+          <img src="media/figures/reward_signal.png" width="72%"
+         alt="Moto-GPT as a reward model."/>
+          </div>
+        <div class="content has-text-justified">
+          <p>
+            Pre-trained Moto-GPT distinguishes successful, failed, and random robot trajectories using log-likelihoods, which indicates that it can effectively measure the rationality of trajectories to provide potential reward signals.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <h2 class="title is-4">&#x2022; Fine-tuned Moto-GPT as an Effective Robot Policy (Q3)</h2>
+    <br>
+    <div class="content has-text-centered">
+      <h2 class="title is-5">Performence on SIMPLER</h2>
+    </div>
+    <img src="media/figures/evaluation_results_on_simpler.png"
+         alt="Performance on SIMPLER."/>
+    <br>
+  </div>
+</section>
+
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-widescreen">
+      <div id="results-simpler" class="carousel results-carousel">
+        <div class="item item-shape-bowl">
+          <video poster="" id="simpler_pick_coke_can_vertical_laying" autoplay muted loop width="100%">
+            <source src="media/videos/simpler_pick_coke_can_vertical_laying.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shape-bowl">
+          <video poster="" id="simpler_open_middle_drawer" autoplay muted loop width="100%">
+            <source src="media/videos/simpler_open_middle_drawer.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-block-bowl">
+          <video poster="" id="bsimpler_move_blue_plastic_bottle_near_sponge" autoplay muted loop width="100%">
+            <source src="media/videos/simpler_move_blue_plastic_bottle_near_sponge.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-shape-bowl">
+          <video poster="" id="simpler_pick_coke_can_horizonal_laying" autoplay muted loop width="100%">
+            <source src="media/videos/simpler_pick_coke_can_horizonal_laying.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shape">
+          <video poster="" id="simpler_close_bottom_drawer" autoplay muted loop width="100%">
+            <source src="media/videos/simpler_close_bottom_drawer.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-block">
+          <video poster="" id="simpler_move_pepsi_can_near_redbull_can" autoplay muted loop width="100%">
+            <source src="media/videos/simpler_move_pepsi_can_near_redbull_can.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+
+
+        <div class="item item-shape-bowl">
+          <video poster="" id="simpler_pick_coke_can_standing" autoplay muted loop width="100%">
+            <source src="media/videos/simpler_pick_coke_can_standing.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-shape">
+          <video poster="" id="simpler_close_top_drawer" autoplay muted loop width="100%">
+            <source src="media/videos/simpler_close_top_drawer.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-block">
+          <video poster="" id="simpler_move_apple_near_redbull_can" autoplay muted loop width="100%">
+            <source src="media/videos/simpler_move_apple_near_redbull_can.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <br>
+    <div class="content has-text-centered">
+      <h2 class="title is-5">Performence on CALVIN (ABC→D)</h2>
+    </div>
+    <img src="media/figures/evaluation_results_on_calvin.png"
+         alt="Performance on CALVIN."/>
+    <br>
+  </div>
+</section>
+
+
+
+
+<section class="hero is-light is-small">
+  <div class="hero-body">
+    <div class="container is-max-widescreen">
+      <div id="results-calvin" class="carousel results-carousel">
+        <div class="item item-shape-bowl">
+          <video poster="" id="calvin_111" autoplay muted loop width="100%">
+            <source src="media/videos/calvin_111.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+                <div class="item item-shape">
+          <video poster="" id="calvin_113" autoplay muted loop width="100%">
+            <source src="media/videos/calvin_113.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+        <div class="item item-block-bowl">
+          <video poster="" id="calvin_163" autoplay muted loop width="100%">
+            <source src="media/videos/calvin_163.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-block">
+          <video poster="" id="calvin_411" autoplay muted loop width="100%">
+            <source src="media/videos/calvin_411.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        <div class="item item-block">
+          <video poster="" id="calvin_243" autoplay muted loop width="100%">
+            <source src="media/videos/calvin_243.mp4"
+                    type="video/mp4">
+          </video>
+        </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <br>
+          <h2 class="title is-5">Data Efficiency</h2>
+          <img src="media/figures/data_efficiency.png" width="79%"
+         alt="Data Efficiency."/>
+        </div>
+        <p>
+          Task success rate of models fine-tuned with different proportions of action-labeled data on CALVIN (ABC→D). The performance gap between Moto-GPT and its variant fine-tuned from scratch without latent motion tokens (Moto w/o Motion Token) widens with limited fine-tuning data.
+        </p>
+
+      </div>
+
+      <div class="column">
+        <div class="content has-text-centered">
+          <br>
+          <h2 class="title is-5">Ablations on Policy Fine-tuning Methods</h2>
+          <br>
+          <img src="media/figures/ablation_results.png" width="72%"
+         alt="Ablations on Policy Fine-tuning Methods."/>
+          </div>
+        <div class="content has-text-justified">
+          <p>
+            Ablations of Moto-GPT on CALVIN (ABC→D). Moto-IML and Moto-DM share the same pre-training approach as Moto-GPT but differ in their fine-tuning methods: Moto-IML omits the loss term for latent motion token prediction, while Moto-DM discards motion tokens in the input sequence entirely.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <p>
+            Website template borrowed from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+    // 获取所有视频元素
+    const videos = document.querySelectorAll('video');
+
+    videos.forEach(video => {
+        // 设置视频播放速度为2倍速
+        video.playbackRate = 2;
+
+        // 监听视频播放结束事件
+        video.addEventListener('ended', function() {
+            // 暂停2秒
+            video.pause();
+            setTimeout(() => {
+                video.currentTime = 0; // 重置视频到开始
+                video.play(); // 播放视频
+            }, 2000); // 2000毫秒 = 2秒
+        });
+
+        // 自动播放视频
+        video.play();
+    });
+</script>
+
+
+
+</body>
+</html>
