@@ -333,8 +333,10 @@
     <h2 class="title is-4">&#x2022; Fine-tuned Moto-GPT as an Effective Robot Policy (Q3)</h2>
     <br>
     <div class="content has-text-centered">
-      <h2 class="title is-5">Performence on SIMPLER</h2>
+      <h2 class="title is-5">Performance on SIMPLER</h2>
     </div>
+    <p>Moto-GPT achieves competitive performance with larger vision-language-action models like RT-2-X (PaLI-X 55B) and OpenVLA (Prismatic 7B), despite having only 98M parameters for the GPT-style backbone. </p>
+    <br>
     <img src="media/figures/evaluation_results_on_simpler.png"
          alt="Performance on SIMPLER."/>
     <br>
@@ -419,7 +421,9 @@
   <div class="container is-max-widescreen">
     <br>
     <div class="content has-text-centered">
-      <h2 class="title is-5">Performence on CALVIN (ABC→D)</h2>
+      <h2 class="title is-5">Performance on CALVIN (ABC→D)</h2>
+      <p>Moto-GPT shows strong zero-shot generalization ability in the unseen CALVIN environment, despite relying solely on RGB images from a static camera. 
+      </p>
     </div>
     <img src="media/figures/evaluation_results_on_calvin.png"
          alt="Performance on CALVIN."/>
@@ -488,7 +492,7 @@
          alt="Data Efficiency."/>
         </div>
         <p>
-          Task success rate of models fine-tuned with different proportions of action-labeled data on CALVIN (ABC→D). The performance gap between Moto-GPT and its variant fine-tuned from scratch without latent motion tokens (Moto w/o Motion Token) widens with limited fine-tuning data.
+          Task success rate of models fine-tuned with different proportions of action-labeled data on CALVIN (ABC→D). The performance gap between Moto-GPT and its variant trained from scratch without latent motion tokens (Moto w/o Motion Token) widens with limited fine-tuning data.
         </p>
 
       </div>
