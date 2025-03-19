@@ -45,12 +45,15 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-2 publication-title">Moto: Latent Motion Token as the Bridging Language for Robot Manipulation</h1>
+          <h1 class="title is-2 publication-title">Moto: Latent Motion Token as the Bridging Language for Learning Robot Manipulation from Videos</h1>
           <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://scholar.google.com/citations?hl=zh-CN&view_op=list_works&gmla=ABOlHiz5P0DGksLQAtkL0Wx2-Lz9aEJs864Y6LumND0NOTbpqMRf01YqKmxsAq5PFNZ2wOMCEJf-BJOUf6bVkhd3XK4&user=3ep5ODoAAAAJ">Yi Chen</a><sup>1,2</sup>,</span>
             <span class="author-block">
               <a href="https://geyuying.github.io/">Yuying Ge</a><sup>2&#8224;</sup>,</span>
+            <span class="author-block">
+              <a href=https://cuhkwilliam.github.io/>Weiliang Tang</a><sup>3</sup>,
+            </span>
             <span class="author-block">
               <a href=https://liyizhuo.com/>Yizhuo Li</a><sup>1,2</sup>,
             </span>
@@ -58,7 +61,7 @@
               <a href=https://geyixiao.com/>Yixiao Ge</a><sup>2</sup>,
             </span>
             <span class="author-block">
-              <a href="https://dingmyu.github.io/">Mingyu Ding</a><sup>3</sup>,
+              <a href="https://dingmyu.github.io/">Mingyu Ding</a><sup>4</sup>,
             </span>
             <span class="author-block">
               <a href="https://scholar.google.com/citations?user=4oXBp9UAAAAJ&hl=en">Ying Shan</a><sup>2</sup>,
@@ -70,8 +73,9 @@
 
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>The University of Hong Kong,</span>
-            <span class="author-block"><sup>2</sup>ARC Lab, Tencent PCG,</span>
-            <span class="author-block"><sup>3</sup>University of California, Berkeley</span>
+            <span class="author-block"><sup>2</sup>ARC Lab, Tencent PCG,</span><br>
+            <span class="author-block"><sup>3</sup>The Chinese University of Hong Kong,</span>
+            <span class="author-block"><sup>4</sup>University of California, Berkeley</span>
           </div>
 
           <div class="is-size-5 publication-authors">
@@ -182,7 +186,7 @@
           Inspired by the way humans learn new skills through observing dynamic environments, we propose that effective robotic learning should emphasize motion-related knowledge, which is closely tied to low-level actions and is hardware-agnostic, facilitating the transfer of learned motions to actual robot actions.
           To this end, we introduce <b>Moto</b>, which converts video content into latent <b>Mo</b>tion <b>To</b>ken sequences by a Latent Motion Tokenizer, learning a bridging "language" of motion from videos in an unsupervised manner.
           We pre-train Moto-GPT through motion token autoregression, enabling it to capture diverse visual motion knowledge. After pre-training, Moto-GPT demonstrates the promising ability to produce semantically interpretable motion tokens, predict plausible motion trajectories, and assess trajectory rationality through output likelihood.
-          To transfer learned motion priors to real robot actions, we implement a co-fine-tuning strategy that seamlessly bridges latent motion token prediction and real robot control. Extensive experiments show that the fine-tuned Moto-GPT exhibits superior robustness and efficiency on robot manipulation benchmarks, underscoring its effectiveness in transferring knowledge from video data to downstream visual manipulations.
+          To transfer learned motion priors to real robot actions, we implement a co-fine-tuning strategy that seamlessly bridges latent motion token prediction and real robot control. Extensive experiments show that the fine-tuned Moto-GPT exhibits superior robustness and efficiency on robot manipulation benchmarks, underscoring its effectiveness in transferring knowledge from video data to downstream visual manipulation tasks.
         </div>
       </div>
     </div>
@@ -345,7 +349,7 @@
 
 
 
-<section class="hero is-light is-small">
+<section class="hero is-small">
   <div class="hero-body">
     <div class="container is-max-widescreen">
       <div id="results-simpler" class="carousel results-carousel">
@@ -409,7 +413,6 @@
         </div>
 
 
-        </div>
       </div>
     </div>
   </div>
@@ -434,7 +437,8 @@
 
 
 
-<section class="hero is-light is-small">
+
+<section class="hero is-small">
   <div class="hero-body">
     <div class="container is-max-widescreen">
       <div id="results-calvin" class="carousel results-carousel">
@@ -471,7 +475,6 @@
           </video>
         </div>
 
-        </div>
       </div>
     </div>
   </div>
@@ -480,6 +483,141 @@
 
 
 
+<!--<section class="hero is-light is-small">-->
+<!--  <div class="hero-body">-->
+<!--    <div class="container is-max-widescreen">-->
+<!--&lt;!&ndash;      <div class="columns is-centered">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="column">&ndash;&gt;-->
+<!--          <div id="results-real_world" class="carousel results-carousel">-->
+<!--            <div class="item item-shape-bowl">-->
+<!--              <video poster="" id="pick_place" autoplay muted loop width="100%">-->
+<!--                <source src="media/videos/pick_place_converted.mp4"-->
+<!--                        type="video/mp4">-->
+<!--              </video>-->
+<!--            </div>-->
+<!--            <div class="item item-shape">-->
+<!--              <video poster="" id="disassembly" autoplay muted loop width="100%">-->
+<!--                <source src="media/videos/disassembly_converted.mp4"-->
+<!--                        type="video/mp4">-->
+<!--              </video>-->
+<!--            </div>-->
+<!--            <div class="item item-block">-->
+<!--              <video poster="" id="close" autoplay muted loop width="100%">-->
+<!--                <source src="media/videos/close_converted.mp4"-->
+<!--                        type="video/mp4">-->
+<!--              </video>-->
+<!--            </div>-->
+
+<!--            <div class="item item-block">-->
+<!--              <video poster="" id="pick_place" autoplay muted loop width="100%">-->
+<!--                <source src="media/videos/pick_place_converted.mp4"-->
+<!--                        type="video/mp4">-->
+<!--              </video>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</section>-->
+
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <br>
+    <div class="content has-text-centered">
+      <h2 class="title is-5">Performance on Real-World Tasks</h2>
+      <p> Moto-GPT consistently outperforms Moto w/o Motion Token on both in-distribution and out-of-distribution tasks in the real-world environment.
+      </p>
+      <br>
+    </div>
+    <div class="columns is-centered">
+    <img src="media/figures/real_world_evaluation_results.png"
+         alt="Performance on Real-World Tasks."
+         width="50%"
+    />
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <div class="columns is-centered">
+      <div class="column">
+        <div class="content has-text-centered">
+          <h2 class="title is-6">Pick-Place</h2>
+          <video poster="" id="pick_place" autoplay muted loop width="100%">
+            <source src="media/videos/pick_place_converted.mp4"
+                    type="video/mp4">
+          </video>
+          <p>
+            place the banana into the pan
+          </p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content has-text-centered">
+          <h2 class="title is-6">Close</h2>
+          <video poster="" id="close" autoplay muted loop width="100%">
+                <source src="media/videos/close_converted.mp4"
+                        type="video/mp4">
+          </video>
+          <p>
+            close the laptop
+          </p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="content has-text-centered">
+          <h2 class="title is-6">Disassembly</h2>
+          <video poster="" id="disassembly" autoplay muted loop width="100%">
+                <source src="media/videos/disassembly_converted.mp4"
+                        type="video/mp4">
+          </video>
+          <p>
+            pull the blue stick out of the yellow base
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-widescreen">
+    <br>
+    <div class="content has-text-centered">
+      <h2 class="title is-5">Learning from Human Videos</h2>
+    </div>
+    <div class="content has-text-justified">
+      <p>
+        With the incorporation of additional human video pre-training using SSV2, which captures basic human hand movements,
+        Moto (OXE+SSV2) demonstrates a significant performance improvement over both Moto w/o Motion Token—trained from scratch without latent motion tokens—and Moto (OXE),
+        which was pre-trained solely on Open-X-Embodiment videos.
+        This enhancement is particularly evident on the Move Near task in SIMPLER.
+      </p>
+      <br>
+    </div>
+    <div class="columns is-centered">
+    <img src="media/figures/simpler_results_with_human_video_pretraining.png"
+         alt="Performance on SIMPLER with Human Video Pretraining"
+         width="50%"
+    />
+    </div>
+    <br><br>
+    <div class="content has-text-justified">
+      <p>Additionally, latent motion tokens can act as a unified "language" to translate human motions into semantically
+     aligned robot actions. This enables not only pre-training with human videos but also in-context robot learning guided by online human demonstrations.
+      </p>
+      <br>
+    </div>
+
+    <div class="columns is-centered">
+    <img src="media/figures/human_robot_motion_transfer.png"
+         alt="Human-Robot Motion Transfer"
+    />
+    </div>
+
+  </div>
+</section>
 
 <section class="section">
   <div class="container is-max-widescreen">
