@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DIAL: Decoupling Intent and Action via Latent World Modeling for End-to-End VLA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+<style>
+/* ───────── Reset & Base ───────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Carlito',Calibri,sans-serif;color:#1a1a2e;font-size:16px;line-height:1.65;background:#fff;overflow-x:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
+a{color:#4361ee;text-decoration:none}
+
+/* ───────── Noise Grain Overlay ───────── */
+body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-repeat:repeat;background-size:180px 180px}
+
+/* ───────── Scroll Reveal ───────── */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+.reveal{opacity:0;transform:translateY(18px)}
+.reveal.visible{animation:fadeInUp .65s cubic-bezier(.25,.46,.45,.94) forwards}
+
+/* ───────── Hero entrance stagger ───────── */
+@keyframes heroUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.hero-anim{opacity:0;animation:heroUp .6s ease forwards}
+.hero-anim.d1{animation-delay:.08s}
+.hero-anim.d2{animation-delay:.16s}
+.hero-anim.d3{animation-delay:.24s}
+.hero-anim.d4{animation-delay:.32s}
+.hero-anim.d5{animation-delay:.4s}
+
+/* ───────── Sticky Nav ───────── */
+nav.topnav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,0,0,.06);padding:.5rem 0;transition:background .3s,box-shadow .3s}
+nav.topnav.scrolled{background:rgba(255,255,255,.95);box-shadow:0 1px 3px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.03)}
+.nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:2rem;font-size:.82rem}
+.nav-logo{font-family:'DM Mono',monospace;font-weight:500;font-size:.85rem;color:#4361ee;text-decoration:none;letter-spacing:.12em;text-transform:uppercase}
+.nav-links{display:flex;gap:1.6rem;margin-left:auto}
+.nav-links a{color:rgba(26,26,46,.4);text-decoration:none;transition:color .2s;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;position:relative;padding-bottom:2px;font-family:'Carlito',Calibri,sans-serif}
+.nav-links a.active{color:#1a1a2e}
+.nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:#4361ee;border-radius:1px}
+.nav-links a:hover{color:rgba(26,26,46,.7)}
+
+/* ───────── Hero (full viewport, light) ───────── */
+@keyframes heroShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+@keyframes orbFloat1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
+@keyframes orbFloat2{0%,100%{transform:translate(0,0)}50%{transform:translate(-25px,15px)}}
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:100px 2rem 4rem;background:linear-gradient(135deg,#f0f4ff,#e8ecff,#f5f0ff,#eef6ff,#f0f4ff);background-size:300% 300%;animation:heroShift 16s ease infinite;color:#1a1a2e;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;width:500px;height:500px;top:-10%;left:-8%;border-radius:50%;background:radial-gradient(circle,rgba(67,97,238,.1),transparent 70%);pointer-events:none;animation:orbFloat1 12s ease-in-out infinite;filter:blur(40px)}
+.hero::after{content:'';position:absolute;width:450px;height:450px;bottom:-5%;right:-6%;border-radius:50%;background:radial-gradient(circle,rgba(114,9,183,.08),transparent 70%);pointer-events:none;animation:orbFloat2 14s ease-in-out infinite;filter:blur(40px)}
+.hero-dots{position:absolute;inset:0;pointer-events:none;background-image:radial-gradient(circle,rgba(67,97,238,.06) 1px,transparent 1px);background-size:28px 28px;z-index:0}
+.hero>*{position:relative;z-index:1}
+.hero h1{font-family:'Plus Jakarta Sans','Carlito',sans-serif;font-size:clamp(2.4rem,5.8vw,4.2rem);line-height:1.12;letter-spacing:-.02em;max-width:1060px;margin-bottom:16px;font-weight:800;color:#1a1a2e}
+.hero h1 em{font-style:normal;background:linear-gradient(135deg,#4361ee,#7209b7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none}
+.hero .authors{color:rgba(26,26,46,.3);font-size:.88rem;margin:0 auto 2rem}
+.hero .btn-row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+.hero .btn-row a{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:8px;font-size:.84rem;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:all .2s;font-family:'Carlito',Calibri,sans-serif}
+.hero .btn-row a.primary{background:#4361ee;color:#fff}
+.hero .btn-row a.primary:hover{background:#3352dd;transform:translateY(-2px);box-shadow:0 6px 22px rgba(67,97,238,.25),0 0 0 4px rgba(67,97,238,.1)}
+.hero .btn-row a.secondary{background:rgba(26,26,46,.04);color:#1a1a2e;border:1px solid rgba(26,26,46,.12)}
+.hero .btn-row a.secondary:hover{background:rgba(26,26,46,.08);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.06)}
+
+/* ───────── Hero Teaser ───────── */
+.hero-teaser{max-width:1060px;width:100%;margin-top:2.5rem}
+.hero-teaser img{width:100%;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.06),0 20px 60px rgba(0,0,0,.1);display:block}
+
+/* ───────── Sections ───────── */
+.section{padding:4.5rem 2rem;position:relative}
+.section.alt{background:#f7f8fb}
+.section.alt::before{content:'';position:absolute;top:0;left:0;right:0;height:48px;background:linear-gradient(to bottom,#fff,#f7f8fb);pointer-events:none}
+.section.alt::after{content:'';position:absolute;bottom:0;left:0;right:0;height:48px;background:linear-gradient(to top,#fff,#f7f8fb);pointer-events:none}
+.section-inner{max-width:1000px;margin:0 auto}
+.section-title{font-family:'Carlito',Calibri,sans-serif;font-size:1.6rem;font-weight:700;margin-bottom:1.4rem;position:relative;padding-bottom:.55rem}
+.section-title::after{content:'';position:absolute;left:0;bottom:0;width:52px;height:3px;background:linear-gradient(90deg,#4361ee,#7209b7);border-radius:3px;box-shadow:0 0 8px rgba(67,97,238,.2)}
+.section-subtitle{font-size:1.1rem;font-weight:700;margin-top:2.2rem;margin-bottom:.6rem;color:#1a1a2e}
+
+/* ───────── Abstract ───────── */
+.abstract-text{font-size:1rem;color:#333;padding-left:1.25rem;margin-top:.5rem;position:relative}
+.abstract-text::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#4361ee,#7209b7);border-radius:2px}
+.abstract-text p+p{margin-top:.7rem}
+
+/* ───────── Background intro text ───────── */
+.bg-text{font-size:.97rem;color:#444;line-height:1.7}
+
+/* ───────── Method Cards ───────── */
+.method-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin:1.5rem 0}
+.method-card{background:#fff;border:1px solid #e8e8f0;border-radius:16px;padding:1.6rem;transition:box-shadow .3s,transform .3s;box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)}
+.method-card:hover{box-shadow:0 2px 4px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.08);transform:translateY(-3px)}
+.method-card .card-label{display:inline-block;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;padding:.2rem .65rem;border-radius:6px;margin-bottom:.7rem}
+.method-card .card-label.sys2{background:#eef0ff;color:#4361ee}
+.method-card .card-label.sys1{background:#ecfdf5;color:#059669}
+.method-card .card-label.train{background:#f0f0f2;color:#666}
+.method-card h4{font-size:1.04rem;font-weight:700;margin-bottom:.45rem}
+.method-card p{font-size:.9rem;color:#555;line-height:1.6}
+
+/* ───────── Figures ───────── */
+figure.fig{margin:2.2rem 0;text-align:center}
+figure.fig img{max-width:100%;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.04),0 8px 32px rgba(0,0,0,.06);transition:transform .3s}
+figure.fig:hover img{transform:scale(1.005)}
+figure.fig.fig-narrow img{max-width:85%;margin:0 auto}
+
+/* ───────── Q-Blocks ───────── */
+.q-block{margin-top:2.5rem;background:#fff;border:1px solid #eaeaf2;border-radius:16px;padding:1.8rem 2rem;position:relative;transition:box-shadow .3s;box-shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04)}
+.q-block::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,#4361ee,#7209b7);border-radius:16px 0 0 16px}
+.q-block:hover{box-shadow:0 2px 4px rgba(0,0,0,.04),0 12px 40px rgba(0,0,0,.08),inset 0 0 0 1px rgba(67,97,238,.04)}
+.q-header{display:flex;align-items:baseline;gap:.7rem;font-size:1.05rem;font-weight:700;color:#1a1a2e;margin-bottom:.5rem;line-height:1.45}
+.q-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#4361ee,#7209b7);color:#fff;font-size:.78rem;font-weight:700;flex-shrink:0}
+.q-summary{font-size:.94rem;color:#444;margin-bottom:1.2rem;padding-left:calc(32px + .7rem)}
+
+/* ───────── Q4 Divider ───────── */
+.q4-divider{margin:2.8rem 0;height:1px;background:linear-gradient(90deg,transparent,#d0d0e0,transparent)}
+
+/* ───────── Tabs ───────── */
+.tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
+.tabs button{padding:.4rem 1.15rem;border:1px solid #d0d0e0;border-radius:20px;background:#fff;color:#555;font-size:.82rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Carlito',Calibri,sans-serif}
+.tabs button.active{background:#4361ee;color:#fff;border-color:#4361ee;box-shadow:0 2px 10px rgba(67,97,238,.25),0 0 0 3px rgba(67,97,238,.08)}
+.tabs button:hover:not(.active){background:#f0f0ff;color:#4361ee;border-color:#c0c0ee}
+
+/* ───────── Video Carousel ───────── */
+.carousel{position:relative}
+.carousel-track{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;overflow:hidden}
+.carousel-btn{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:36px;height:36px;border-radius:50%;border:1px solid rgba(0,0,0,.12);background:rgba(255,255,255,.92);backdrop-filter:blur(8px);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.08);color:#1a1a2e}
+.carousel-btn:hover{background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.1),0 0 0 3px rgba(67,97,238,.06);border-color:rgba(0,0,0,.15)}
+.carousel-btn.prev{left:-18px}
+.carousel-btn.next{right:-18px}
+.carousel-btn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.carousel-counter{display:none}
+
+/* ───────── Video Cards (Simulation) ───────── */
+.video-card{border:1px solid #e8e8f0;border-radius:14px;overflow:hidden;background:#fff;transition:box-shadow .3s,transform .3s;box-shadow:0 1px 2px rgba(0,0,0,.03),0 3px 12px rgba(0,0,0,.04)}
+.video-card:hover{box-shadow:0 2px 4px rgba(0,0,0,.04),0 10px 32px rgba(0,0,0,.09);transform:translateY(-2px)}
+.video-card .vc-label{padding:.55rem .85rem .35rem;font-size:.78rem;color:#333;font-style:italic;line-height:1.4;min-height:2.6rem;display:flex;align-items:center}
+.video-card .vc-video-wrap{position:relative}
+.video-card .vc-video-wrap video{width:100%;display:block}
+.speed-badge{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.55);color:#fff;font-size:.58rem;font-weight:700;padding:2px 8px;border-radius:8px;pointer-events:none;backdrop-filter:blur(4px);letter-spacing:.02em}
+
+/* ───────── Video Cards (Real-world) ───────── */
+.rw-video-wrap{position:relative;overflow:hidden;border-radius:10px}
+.rw-video-wrap video{width:100%;display:block}
+.category-tag{position:absolute;top:6px;left:6px;color:#fff;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:8px;z-index:2;pointer-events:none;backdrop-filter:blur(4px)}
+.rw-video-wrap .speed-badge{z-index:2}
+
+/* ───────── BibTeX ───────── */
+.bibtex-wrap{position:relative;background:#f5f5fa;border:1px solid #e8e8f0;border-radius:14px;padding:1.3rem 1.5rem 1.3rem 1.8rem;margin-top:1.5rem;overflow-x:auto;box-shadow:0 1px 2px rgba(0,0,0,.03),0 4px 16px rgba(0,0,0,.03)}
+.bibtex-wrap::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#4361ee,#7209b7)}
+.bibtex-wrap pre{color:#333;font-size:.78rem;font-family:'DM Mono','SF Mono',Menlo,Consolas,monospace;line-height:1.6;white-space:pre;margin:0}
+.bibtex-copy{position:absolute;top:.8rem;right:.8rem;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.1);color:#555;font-size:.72rem;font-weight:700;padding:.3rem .8rem;border-radius:8px;cursor:pointer;transition:all .2s}
+.bibtex-copy:hover{background:rgba(0,0,0,.08);box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.bibtex-copy.copied{background:#059669;border-color:#059669;color:#fff}
+
+/* ───────── Footer ───────── */
+footer{text-align:center;padding:2.5rem 2rem;color:#999;font-size:.82rem;border-top:none;position:relative}
+footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,#d0d0e0,transparent)}
+
+/* ───────── Responsive ───────── */
+@media(max-width:700px){
+  .hero{padding:80px 1.2rem 2.5rem}
+  .hero h1{font-size:1.8rem}
+  .hero-teaser{margin-top:1.5rem}
+  .section{padding:3rem 1.2rem}
+  .method-cards{grid-template-columns:1fr}
+  .carousel-track{grid-template-columns:1fr}
+  .carousel-btn{display:none}
+  .q-block{padding:1.3rem 1.2rem}
+  .q-summary{padding-left:0}
+  .q-header{font-size:.92rem}
+  .nav-inner{padding:0 1rem;gap:1rem}
+  .nav-links{gap:.6rem;font-size:.7rem}
+  figure.fig.fig-narrow img{max-width:100%}
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ NAV ════════════════ -->
+<nav class="topnav" id="topnav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">DIAL</a>
+    <div class="nav-links" id="nav-links">
+      <a href="#abstract" data-section="abstract">Abstract</a>
+      <a href="#background" data-section="background">Background</a>
+      <a href="#method" data-section="method">Method</a>
+      <a href="#experiments" data-section="experiments">Experiments</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ════════════════ HERO (full viewport, light, with teaser) ════════════════ -->
+<section class="hero" id="hero">
+  <div class="hero-dots"></div>
+  <h1 class="hero-anim d1"><em>DIAL:</em> <em>D</em>ecoupling <em>I</em>ntent and <em>A</em>ction via <em>L</em>atent World Modeling for End-to-End VLA</h1>
+  <p class="authors hero-anim d2">Authors (placeholder)</p>
+  <div class="btn-row hero-anim d3">
+    <a href="DIAL.pdf" class="primary">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Paper
+    </a>
+    <a href="#" class="secondary">
+      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+      Code
+    </a>
+  </div>
+  <div class="hero-teaser hero-anim d4">
+    <img src="figures/teaser.png" alt="DIAL Framework Overview">
+  </div>
+</section>
+
+<!-- ════════════════ ABSTRACT ════════════════ -->
+<section class="section alt" id="abstract">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Abstract</h2>
+    <div class="abstract-text">
+      <p>The development of Vision-Language-Action (VLA) models has been significantly accelerated by pre-trained Vision-Language Models (VLMs). However, most existing end-to-end VLAs treat the VLM primarily as a multimodal encoder, directly mapping vision-language features to low-level actions. This paradigm underutilizes the VLM's potential role in high-level decision making and introduces training instability, frequently causing degradation of its rich semantic representations.</p>
+      <p>To address these limitations, we introduce <strong>DIAL</strong> (<strong>D</strong>ecoupling <strong>I</strong>ntent and <strong>A</strong>ction via <strong>L</strong>atent World Modeling), a framework that bridges high-level decision making and low-level motor execution through a differentiable latent intent bottleneck. Specifically, a VLM-based System-2 performs latent world modeling by synthesizing the latent visual foresight within the native feature space of the VLM's vision encoder; this foresight explicitly encodes the VLM's intent and serves as the structural bottleneck. A lightweight System-1 policy then decodes this predicted intent together with the current observation into precise robot actions via latent inverse dynamics.</p>
+      <p>Extensive experiments on the RoboCasa GR1 Tabletop benchmark demonstrate that DIAL establishes a new state of the art, achieving superior performance with <strong>10&times; fewer demonstrations</strong> than prior methods. Furthermore, by leveraging heterogeneous human demonstrations, DIAL learns physically grounded manipulation priors and exhibits robust <strong>zero-shot generalization</strong> to unseen objects and novel configurations during real-world deployment on a humanoid robot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ BACKGROUND ════════════════ -->
+<section class="section" id="background">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Background</h2>
+    <div class="bg-text">
+      <p>Pre-trained VLMs provide a powerful cognitive foundation for robotic manipulation, yet translating their high-level intent into precise motor control remains an open challenge. As illustrated below, existing approaches fall into two paradigms, each with a fundamental limitation. <strong>Hierarchical planners</strong> prompt VLMs to generate text or code plans for a separate low-level controller&mdash;but this non-differentiable interface blocks action gradients from refining the VLM's physical understanding. <strong>End-to-end VLAs</strong> directly predict actions, yet they often reduce the VLM to a passive encoder; even with auxiliary foresight objectives, the absence of a strict structural bottleneck still permits shortcut learning that bypasses true intent grounding. DIAL resolves this dilemma by introducing a <strong>differentiable latent bottleneck</strong> that requires the policy to bridge the gap between current visual features and the VLM's predicted latent foresight, ensuring that execution is inherently anchored to the VLM's intent.</p>
+    </div>
+    <figure class="fig reveal">
+      <img src="figures/related_work.png" alt="VLA Architecture Comparison">
+    </figure>
+  </div>
+</section>
+
+<!-- ════════════════ METHOD ════════════════ -->
+<section class="section alt" id="method">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Method</h2>
+    <p style="color:#444;margin-bottom:1.5rem">DIAL adopts a dual-system architecture that decouples high-level reasoning from low-level execution through a differentiable latent intent bottleneck. As shown below, <strong>System-2</strong> (the &ldquo;Brain&rdquo;), built upon a pre-trained VLM backbone, performs latent world modeling to synthesize a <em>latent intent</em> that predicts the future visual state in the VLM&rsquo;s native ViT feature space. <strong>System-1</strong> (the &ldquo;Cerebellum&rdquo;) resolves the gap between the current observation and this intent to produce motor commands, acting as a latent inverse dynamics model. This design elevates the VLM from a passive encoder to an active decision maker whose goal-directed foresight structurally governs downstream execution. Both systems share the same frozen ViT, establishing a unified latent space that naturally supports independent decoupled warmup (as indicated by the switches in the figure) followed by seamless end-to-end optimization, where action-aware gradients flow back through the latent intent into the VLM.</p>
+
+    <figure class="fig reveal">
+      <img src="figures/model_overview.png" alt="DIAL Architecture">
+    </figure>
+
+    <div class="method-cards">
+      <div class="method-card reveal">
+        <span class="card-label sys2">System-2</span>
+        <h4>Predictive Intent via Latent World Modeling</h4>
+        <p>The VLM processes the current visual observation and language instruction. Learnable query tokens are appended to the LLM sequence; their output representations are projected through an MLP head to synthesize the latent intent&mdash;a spatially structured prediction of the future visual state, trained via MSE alignment with the ground-truth ViT features of the future observation.</p>
+      </div>
+      <div class="method-card reveal">
+        <span class="card-label sys1">System-1</span>
+        <h4>Reactive Control as Latent Inverse Dynamics</h4>
+        <p>A lightweight self-attention module fuses the current ViT features with the predicted latent intent, producing a spatially-aware conditioning signal. A DiT-based decoder then takes this signal via cross-attention, along with the projected proprioceptive state and noisy action tokens, to generate action chunks via flow matching&mdash;resolving state-transition dynamics entirely in latent space.</p>
+      </div>
+      <div class="method-card reveal">
+        <span class="card-label train">Training</span>
+        <h4>Decoupled Warmup &rarr; End-to-End Synergy</h4>
+        <p><strong>Stage 1</strong> pre-trains both systems independently: System-2 learns visual foresight via the world modeling loss, while System-1 learns sensorimotor control conditioned on ground-truth future features. <strong>Stage 2</strong> unifies the pipeline: System-1 is conditioned on System-2's synthesized intent, enabling gradients to flow back through the latent bottleneck and into the VLM, forcing the intent to become explicitly action-aware.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ EXPERIMENTS ════════════════ -->
+<section class="section" id="experiments">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Experiments</h2>
+    <p class="reveal" style="color:#444;margin-bottom:.5rem">We evaluate DIAL through five core research questions spanning performance, architecture, scalability, real-world robustness, and interpretability.</p>
+
+    <!-- ── Q1 ── -->
+    <div class="q-block reveal">
+      <div class="q-header"><span class="q-num">Q1</span> Does DIAL outperform state-of-the-art baselines on the public humanoid simulation benchmark?</div>
+      <p class="q-summary">On the full RoboCasa GR1 Tabletop benchmark (1,000 trajectories per task), DIAL achieves <strong>70.2%</strong> average success rate, substantially outperforming the strongest baseline FLARE (55.0%) and advanced VLA architectures such as GR00T-N1.6 (47.6%). The consistent margin across both Pick &amp; Place (68.9%) and Articulated Tasks (74.3%) highlights DIAL's balanced capability across distinct task categories.</p>
+      <figure class="fig">
+        <img src="figures/results_robocasa_full.png" alt="Full-data results">
+      </figure>
+      <h3 class="section-subtitle">Simulation Demo Videos</h3>
+      <div class="tabs" id="sim-tabs">
+        <button class="active" data-tab="pp">Pick &amp; Place</button>
+        <button data-tab="art">Articulated Tasks</button>
+      </div>
+      <div class="carousel" id="carousel-sim-pp">
+        <button class="carousel-btn prev" data-dir="-1"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="carousel-track" id="sim-video-pp"></div>
+        <button class="carousel-btn next" data-dir="1"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
+        <div class="carousel-counter"></div>
+      </div>
+      <div class="carousel" id="carousel-sim-art" style="display:none">
+        <button class="carousel-btn prev" data-dir="-1"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="carousel-track" id="sim-video-art"></div>
+        <button class="carousel-btn next" data-dir="1"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
+        <div class="carousel-counter"></div>
+      </div>
+    </div>
+
+    <!-- ── Q2 ── -->
+    <div class="q-block reveal">
+      <div class="q-header"><span class="q-num">Q2</span> How sample-efficient is DIAL, and which architectural designs are essential for grounding the VLM's intent in low-level control?</div>
+      <p class="q-summary">Under a strict few-shot setting (100 trajectories per task), DIAL reaches <strong>58.3%</strong>, surpassing FLARE (55.0%) trained with 10&times; more data, demonstrating strong sample efficiency. Systematic ablations further reveal three essential design choices: (i) explicit world modeling grounds the VLM in future physical states; (ii) DIAL's structural bottleneck prevents shortcut learning where loosely coupled variants (SEER, FLARE-style) plateau below 52%; (iii) operating in the VLM's native ViT feature space is critical, as replacing it with DINO-v2 drops performance to 47.2% due to feature-space misalignment between the two systems.</p>
+      <figure class="fig">
+        <img src="figures/results_robocasa.png" alt="Few-shot and ablation results">
+      </figure>
+    </div>
+
+    <!-- ── Q3 ── -->
+    <div class="q-block reveal">
+      <div class="q-header"><span class="q-num">Q3</span> Can DIAL effectively scale by leveraging heterogeneous human demonstrations to enhance both in-distribution and OOD performance?</div>
+      <p class="q-summary">By incorporating cross-embodiment human demonstrations from the EgoDex <em>basic_pick_place</em> subset, DIAL boosts Pick &amp; Place success from 56.0% to 60.8% and substantially improves OOD generalization: +6.3% on unseen objects, +5.7% on unseen combinations, and +3.1% on unseen appearances. The average OOD success rate rises from 46.2% to 51.2%, demonstrating effective cross-embodiment learning. Since this subset contains only rearrangement interactions without articulated objects, Articulated Tasks see no improvement due to domain mismatch, while Pick &amp; Place and OOD scenarios benefit substantially.</p>
+      <figure class="fig">
+        <img src="figures/results_robocasa_egodex_narrow.png" alt="Human data scalability">
+      </figure>
+    </div>
+
+    <!-- ── Q4 ── -->
+    <div class="q-block reveal">
+      <div class="q-header"><span class="q-num">Q4</span> Can DIAL achieve robust real-world generalization, and what role does the decoupled warmup play in achieving this?</div>
+      <p class="q-summary">We validate DIAL on the IRON-R01 humanoid robot with two tasks designed analogous to representative EgoDex subsets for cross-embodiment learning: <strong>Pick &amp; Place</strong> (mimicking EgoDex <em>basic_pick_place</em>) and <strong>Pouring</strong> (mimicking EgoDex <em>pour</em>). DIAL achieves 77.5% in-distribution success and 58.3% OOD success. Decoupled warmup is critical: removing it drops ID performance to 57.5% and OOD from 58.3% to 30.0%. Human data pre-training is equally vital, with its removal degrading OOD success from 58.3% to 26.7%.</p>
+      <h3 class="section-subtitle">Real-World Task Design and Data Sources</h3>
+      <figure class="fig">
+        <img src="figures/demo_task.png" alt="Real-world tasks and data sources">
+      </figure>
+
+      <!-- ID block -->
+      <h3 class="section-subtitle">In-Distribution Performance</h3>
+      <figure class="fig">
+        <img src="figures/results_real_robot_id.png" alt="In-distribution results">
+      </figure>
+      <div class="carousel" id="carousel-rw-id">
+        <button class="carousel-btn prev" data-dir="-1"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="carousel-track" id="rw-id-row"></div>
+        <button class="carousel-btn next" data-dir="1"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
+        <div class="carousel-counter"></div>
+      </div>
+
+      <!-- Divider -->
+      <div class="q4-divider"></div>
+
+      <!-- OOD block -->
+      <h3 class="section-subtitle">Out-of-Distribution Performance</h3>
+      <figure class="fig">
+        <img src="figures/results_real_robot_ood.png" alt="OOD results">
+      </figure>
+      <div class="carousel" id="carousel-rw-ood">
+        <button class="carousel-btn prev" data-dir="-1"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div class="carousel-track" id="rw-ood-row"></div>
+        <button class="carousel-btn next" data-dir="1"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
+        <div class="carousel-counter"></div>
+      </div>
+    </div>
+
+    <!-- ── Q5 ── -->
+    <div class="q-block reveal">
+      <div class="q-header"><span class="q-num">Q5</span> Do the predicted latent foresights capture semantically meaningful, task-relevant dynamics in the VLM's native feature space?</div>
+      <p class="q-summary">We visualize the latent features of the current observation, ground-truth future, and predicted foresight by mapping their first three PCA components to RGB. The predicted foresight closely mirrors the ground-truth future in task-relevant regions while diverging from the current observation where manipulation is expected. The last column shows per-patch cosine distance between foresight and current features, with warmer colors indicating greater anticipated change. These results confirm that System-2 actively anticipates meaningful state transitions rather than merely reconstructing the current scene, generating a coherent &ldquo;visual roadmap&rdquo; for System-1.</p>
+      <figure class="fig fig-narrow">
+        <img src="figures/latent_visualization.png" alt="Latent visualization">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ BIBTEX ════════════════ -->
+<section class="section alt" id="bibtex">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Citation</h2>
+    <div class="bibtex-wrap">
+      <button class="bibtex-copy" id="bib-copy-btn">Copy</button>
+      <pre id="bib-text">@inproceedings{dial2025,
+  title     = {DIAL: Decoupling Intent and Action via Latent World Modeling for End-to-End VLA},
+  author    = {Authors (placeholder)},
+  year      = {2025}
+}</pre>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════ FOOTER ════════════════ -->
+<footer>
+  <p>For full references and technical details, please see the <a href="DIAL.pdf">paper</a>.</p>
+</footer>
+
+<!-- ════════════════ SCRIPT ════════════════ -->
+<script>
+(function(){
+  /* ── Nav scroll shadow ── */
+  var topnav = document.getElementById('topnav');
+  window.addEventListener('scroll', function(){
+    topnav.classList.toggle('scrolled', window.scrollY > 80);
+  }, {passive:true});
+
+  /* ── Active nav tracking ── */
+  var sections = document.querySelectorAll('section[id]');
+  var navLinks = document.querySelectorAll('.nav-links a[data-section]');
+  var navObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        navLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-section') === e.target.id); });
+      }
+    });
+  }, {rootMargin:'-30% 0px -60% 0px'});
+  sections.forEach(function(s){ navObs.observe(s); });
+
+  /* ── Scroll reveal ── */
+  var revealObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('visible'); revealObs.unobserve(e.target); } });
+  }, {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ revealObs.observe(el); });
+
+  /* ── BibTeX copy ── */
+  document.getElementById('bib-copy-btn').addEventListener('click', function(){
+    var btn = this;
+    navigator.clipboard.writeText(document.getElementById('bib-text').textContent).then(function(){
+      btn.textContent = 'Copied!'; btn.classList.add('copied');
+      setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    });
+  });
+
+  /* ── Helpers ── */
+  function makeSimCard(filename){
+    var raw = filename.replace(/\.mp4$/, '');
+    var instruction = raw.charAt(0).toUpperCase() + raw.slice(1) + '.';
+    var card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML =
+      '<div class="vc-label">' + instruction + '</div>' +
+      '<div class="vc-video-wrap">' +
+        '<video src="videos/robocasa/' + encodeURI(filename) + '" autoplay muted loop playsinline preload="metadata"></video>' +
+        '<span class="speed-badge">Autonomous &times;2</span>' +
+      '</div>';
+    return card;
+  }
+
+  var tagColors = {
+    'Pick & Place': 'rgba(67,97,238,.55)',
+    'Pouring': 'rgba(219,39,119,.55)',
+    'Combinatorial': 'rgba(114,9,183,.55)',
+    'Distractor': 'rgba(249,115,22,.55)',
+    'Instance Transfer': 'rgba(20,184,166,.55)'
+  };
+
+  function makeRealCard(key, instruction, tag){
+    var bg = tagColors[tag] || 'rgba(0,0,0,.5)';
+    var card = document.createElement('div');
+    card.className = 'video-card';
+    card.innerHTML =
+      '<div class="vc-label">' + instruction + '</div>' +
+      '<div class="rw-video-wrap">' +
+        '<span class="category-tag" style="background:' + bg + '">' + tag + '</span>' +
+        '<video src="videos/real_world_processed/' + key + '.mp4" autoplay muted loop playsinline preload="metadata"></video>' +
+        '<span class="speed-badge">Autonomous &times;2</span>' +
+      '</div>';
+    return card;
+  }
+
+  function fill(id, cards){
+    var c = document.getElementById(id);
+    cards.forEach(function(card){ c.appendChild(card); });
+  }
+
+  /* ── Simulation videos ── */
+  var ppVideos = [
+    'pick the croissant from the tray and place it in the tiered basket.mp4',
+    'pick the cupcake from the plate and place it in the cardboard box.mp4',
+    'pick the eggplant from the cutting board and place it in the pan.mp4',
+    'pick the lemon from the plate and place it in the cardboard box.mp4',
+    'pick the squash from the cutting board and place it in the pan.mp4',
+    'pick the sweet potato from the tray and place it in the tiered basket.mp4'
+  ];
+  var artVideos = [
+    'pick up the bottled water, place it into the cabinet and close the cabinet.mp4',
+    'pick up the can, place it into the drawer and close the drawer.mp4',
+    'pick up the cup, place it into the drawer and close the drawer.mp4',
+    'pick up the milk, place it into the microwave and close the microwave.mp4',
+    'pick up the potato, place it into the microwave and close the microwave.mp4',
+    'pick up the wine, place it into the cabinet and close the cabinet.mp4'
+  ];
+  ppVideos.forEach(function(f){ document.getElementById('sim-video-pp').appendChild(makeSimCard(f)); });
+  artVideos.forEach(function(f){ document.getElementById('sim-video-art').appendChild(makeSimCard(f)); });
+
+  document.getElementById('sim-tabs').addEventListener('click', function(e){
+    if(e.target.tagName !== 'BUTTON') return;
+    this.querySelectorAll('button').forEach(function(b){ b.classList.remove('active'); });
+    e.target.classList.add('active');
+    var tab = e.target.getAttribute('data-tab');
+    document.getElementById('carousel-sim-pp').style.display = tab === 'pp' ? '' : 'none';
+    document.getElementById('carousel-sim-art').style.display = tab === 'art' ? '' : 'none';
+  });
+
+  /* ── Real-world videos ── */
+  var rwI = {
+    id_put_bowl: 'Put the bowl in the box.',
+    id_put_banana: 'Put the banana in the box.',
+    id_pour_pepsi: 'Pour contents from the bottle into the cup.',
+    id_pour_water: 'Pour contents from the bottle into the cup.',
+    ood_combination_put_bowl: 'Put the bowl in the box.',
+    ood_combination_put_banana: 'Put the banana in the box.',
+    ood_combination_put_bowl_single_side: 'Put the bowl in the box.',
+    ood_distractor_bowl: 'Put the bowl in the box.',
+    ood_distractor_banana: 'Put the banana in the box.',
+    ood_pour_tea: 'Pour contents from the bottle into the cup.',
+    ood_pour_mirinda: 'Pour contents from the bottle into the cup.',
+    ood_pour_water: 'Pour contents from the bottle into the cup.'
+  };
+
+  fill('rw-id-row', [
+    makeRealCard('id_put_bowl', rwI.id_put_bowl, 'Pick & Place'),
+    makeRealCard('id_put_banana', rwI.id_put_banana, 'Pick & Place'),
+    makeRealCard('id_pour_pepsi', rwI.id_pour_pepsi, 'Pouring'),
+    makeRealCard('id_pour_water', rwI.id_pour_water, 'Pouring')
+  ]);
+
+  fill('rw-ood-row', [
+    makeRealCard('ood_combination_put_bowl', rwI.ood_combination_put_bowl, 'Combinatorial'),
+    makeRealCard('ood_combination_put_banana', rwI.ood_combination_put_banana, 'Combinatorial'),
+    makeRealCard('ood_combination_put_bowl_single_side', rwI.ood_combination_put_bowl_single_side, 'Combinatorial'),
+    makeRealCard('ood_distractor_bowl', rwI.ood_distractor_bowl, 'Distractor'),
+    makeRealCard('ood_distractor_banana', rwI.ood_distractor_banana, 'Distractor'),
+    makeRealCard('ood_pour_tea', rwI.ood_pour_tea, 'Instance Transfer'),
+    makeRealCard('ood_pour_mirinda', rwI.ood_pour_mirinda, 'Instance Transfer'),
+    makeRealCard('ood_pour_water', rwI.ood_pour_water, 'Instance Transfer')
+  ]);
+
+  /* ── Carousel logic: sliding window of 3, shift by 1, cyclic ── */
+  function initCarousel(carouselEl){
+    var track = carouselEl.querySelector('.carousel-track');
+    var items = Array.prototype.slice.call(track.children);
+    var total = items.length;
+    if(total <= 3){
+      carouselEl.querySelectorAll('.carousel-btn').forEach(function(b){ b.style.display='none'; });
+      var cnt = carouselEl.querySelector('.carousel-counter');
+      if(cnt) cnt.style.display='none';
+      return;
+    }
+    var start = 0;
+
+    function show(){
+      items.forEach(function(c){ c.style.display='none'; c.style.order=''; });
+      for(var i = 0; i < 3; i++){
+        var idx = (start + i) % total;
+        items[idx].style.display = '';
+        items[idx].style.order = i;
+      }
+    }
+
+    carouselEl.addEventListener('click', function(e){
+      var btn = e.target.closest('.carousel-btn');
+      if(!btn) return;
+      var dir = parseInt(btn.getAttribute('data-dir'));
+      start = (start + dir + total) % total;
+      show();
+    });
+
+    show();
+  }
+
+  document.querySelectorAll('.carousel').forEach(initCarousel);
+
+  /* ── 2x playback ── */
+  document.querySelectorAll('video').forEach(function(v){
+    v.addEventListener('loadedmetadata', function(){ this.playbackRate = 2.0; });
+    if(v.readyState >= 1) v.playbackRate = 2.0;
+  });
+
+  /* ── Simulation videos: loop only first 3/4 ── */
+  document.querySelectorAll('#sim-video-pp video, #sim-video-art video').forEach(function(v){
+    v.addEventListener('timeupdate', function(){
+      if(this.duration && this.currentTime >= this.duration * 0.75){
+        this.currentTime = 0;
+      }
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
