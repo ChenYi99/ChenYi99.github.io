@@ -424,7 +424,7 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
     card.innerHTML =
       '<div class="vc-label">' + instruction + '</div>' +
       '<div class="vc-video-wrap">' +
-        '<video src="videos/robocasa/' + encodeURI(filename) + '" autoplay muted loop playsinline preload="metadata"></video>' +
+        '<video data-src="videos/robocasa/' + encodeURI(filename) + '" muted loop playsinline preload="none"></video>' +
         '<span class="speed-badge">Autonomous &times;2</span>' +
       '</div>';
     return card;
@@ -446,7 +446,7 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
       '<div class="vc-label">' + instruction + '</div>' +
       '<div class="rw-video-wrap">' +
         '<span class="category-tag" style="background:' + bg + '">' + tag + '</span>' +
-        '<video src="videos/real_world_processed/' + key + '.mp4" autoplay muted loop playsinline preload="metadata"></video>' +
+        '<video data-src="videos/real_world_processed/' + key + '.mp4" muted loop playsinline preload="none"></video>' +
         '<span class="speed-badge">Autonomous &times;2</span>' +
       '</div>';
     return card;
@@ -555,10 +555,25 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
 
   document.querySelectorAll('.carousel').forEach(initCarousel);
 
-  /* ── 2x playback ── */
+  /* ── Lazy load + play/pause via IntersectionObserver ── */
+  var videoObs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      var v = e.target;
+      if(e.isIntersecting){
+        if(!v.src && v.dataset.src){
+          v.src = v.dataset.src;
+          v.load();
+        }
+        v.play().catch(function(){});
+      } else {
+        v.pause();
+      }
+    });
+  }, {rootMargin:'200px 0px'});
+
   document.querySelectorAll('video').forEach(function(v){
     v.addEventListener('loadedmetadata', function(){ this.playbackRate = 2.0; });
-    if(v.readyState >= 1) v.playbackRate = 2.0;
+    videoObs.observe(v);
   });
 
   /* ── Simulation videos: loop only first 3/4 ── */
