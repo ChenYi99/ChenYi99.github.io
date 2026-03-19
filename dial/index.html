@@ -48,6 +48,8 @@ nav.topnav.scrolled{background:rgba(13,17,23,.95);box-shadow:0 1px 3px rgba(0,0,
 .side-nav a{display:block;padding:.45rem .85rem;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:rgba(230,237,243,.3);text-decoration:none;border-left:2px solid transparent;transition:all .25s;font-family:'Carlito',Calibri,sans-serif;white-space:nowrap}
 .side-nav a:hover{color:rgba(230,237,243,.65)}
 .side-nav a.active{color:#e6edf3;border-left-color:#58a6ff}
+.side-nav{transition:opacity .4s ease}
+.side-nav.hidden{opacity:0;pointer-events:none}
 
 /* ───────── Hero ───────── */
 @keyframes heroShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
@@ -452,10 +454,16 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
 <!-- ════════════════ SCRIPT ════════════════ -->
 <script>
 (function(){
-  /* ── Nav scroll shadow ── */
+  /* ── Nav scroll shadow + hide side-nav in hero ── */
   var topnav = document.getElementById('topnav');
+  var sideNav = document.querySelector('.side-nav');
+  var heroEl = document.querySelector('.hero');
+  if(sideNav) sideNav.classList.add('hidden');
   window.addEventListener('scroll', function(){
     topnav.classList.toggle('scrolled', window.scrollY > 80);
+    if(sideNav && heroEl){
+      sideNav.classList.toggle('hidden', window.scrollY < heroEl.offsetHeight - 100);
+    }
   }, {passive:true});
 
   /* ── Active side-nav tracking ── */
