@@ -201,7 +201,7 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
   <h1 class="hero-anim d1"><em>DIAL:</em> <em>D</em>ecoupling <em>I</em>ntent and <em>A</em>ction via <em>L</em>atent World Modeling for End-to-End VLA</h1>
   <p class="authors hero-anim d2">Authors (placeholder)</p>
   <div class="hero-teaser hero-anim d3">
-    <video src="videos/teaser_live_dark.mp4" autoplay loop muted playsinline></video>
+    <video id="teaser-video" src="videos/teaser_live_dark.mp4" autoplay muted playsinline controls></video>
   </div>
 </section>
 
@@ -247,7 +247,7 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
     </div>
 
     <figure class="fig no-invert reveal">
-      <video id="model-overview-video" src="videos/model_overview_dark.mp4" autoplay muted playsinline style="width:80%;margin:0 auto;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2),0 8px 32px rgba(0,0,0,.3);display:block;transform:scaleY(0.95)"></video>
+      <video id="model-overview-video" src="videos/model_overview_dark.mp4" autoplay muted playsinline controls style="width:80%;margin:0 auto;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2),0 8px 32px rgba(0,0,0,.3);display:block;transform:scaleY(0.95)"></video>
       <figcaption>Dual-system architecture of DIAL. System-2 synthesizes latent foresight from language and visual input. System-1 fuses current observation with predicted intent for action generation via flow matching. Training switches from decoupled warmup to end-to-end optimization.</figcaption>
     </figure>
 
@@ -645,6 +645,23 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
     v.addEventListener('loadedmetadata', function(){ this.playbackRate = 2.0; });
     videoObs.observe(v);
   });
+
+  /* ── Teaser video: start from last 5s, then loop from beginning ── */
+  var teaserV = document.getElementById('teaser-video');
+  if(teaserV){
+    var teaserFirstPlay = true;
+    teaserV.addEventListener('loadedmetadata', function(){
+      this.playbackRate = 2.0;
+      if(teaserFirstPlay){
+        this.currentTime = Math.max(0, this.duration - 10);
+      }
+    });
+    teaserV.addEventListener('ended', function(){
+      teaserFirstPlay = false;
+      this.currentTime = 0;
+      this.play().catch(function(){});
+    });
+  }
 
   /* ── Model overview video: pause 10s then replay ── */
   var moVideo = document.getElementById('model-overview-video');
