@@ -227,7 +227,7 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
     <div class="blog-text">
       <p>Translating a VLM&rsquo;s high-level understanding into precise motor control remains one of the central challenges in embodied AI. Existing approaches fall into two paradigms, each with a fundamental limitation.</p>
 
-      <p><strong>Hierarchical planners</strong> prompt VLMs to generate text or code plans for a separate low-level controller. While modular, this design introduces a non-differentiable interface that blocks action gradients from ever refining the VLM&rsquo;s physical understanding.</p>
+      <p><strong>Hierarchical planners</strong> prompt VLMs to generate text or code plans for a separate low-level controller. While modular, this incurs inter-system latency and introduces a non-differentiable interface that blocks action gradients from refining the VLM&rsquo;s physical understanding, making it difficult for the two systems to closely collaborate on complex tasks.</p>
 
       <p><strong>End-to-end VLAs</strong> take the opposite approach: they directly predict actions from the VLM&rsquo;s representations. This is fully differentiable and allows tighter integration between perception and control, but it often reduces the VLM to a passive encoder. Even methods that add auxiliary foresight objectives suffer from a critical weakness&mdash;without a strict structural bottleneck, the policy can learn shortcuts that bypass true intent grounding.</p>
     </div>
