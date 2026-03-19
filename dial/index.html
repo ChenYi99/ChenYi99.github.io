@@ -674,6 +674,7 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
   /* ── Model overview video: pause 10s then replay ── */
   var moVideo = document.getElementById('model-overview-video');
   if(moVideo){
+    moVideo.playbackRate = 0.5;
     moVideo.addEventListener('ended', function(){
       var v = this;
       setTimeout(function(){ v.currentTime = 0; v.play().catch(function(){}); }, 10000);
