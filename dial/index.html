@@ -31,18 +31,25 @@ body::after{content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;o
 .hero-anim.d4{animation-delay:.32s}
 .hero-anim.d5{animation-delay:.4s}
 
-/* ───────── Sticky Nav ───────── */
+/* ───────── Top Bar ───────── */
 nav.topnav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(13,17,23,.88);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06);padding:.5rem 0;transition:background .3s,box-shadow .3s}
 nav.topnav.scrolled{background:rgba(13,17,23,.95);box-shadow:0 1px 3px rgba(0,0,0,.2),0 4px 16px rgba(0,0,0,.15)}
 .nav-inner{max-width:1100px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:2rem;font-size:.82rem}
 .nav-logo{font-family:'DM Mono',monospace;font-weight:500;font-size:.85rem;color:#58a6ff;text-decoration:none;letter-spacing:.12em;text-transform:uppercase}
-.nav-links{display:flex;gap:1.6rem;margin-left:auto}
-.nav-links a{color:rgba(230,237,243,.4);text-decoration:none;transition:color .2s;font-size:.78rem;letter-spacing:.04em;text-transform:uppercase;position:relative;padding-bottom:2px;font-family:'Carlito',Calibri,sans-serif}
-.nav-links a.active{color:#e6edf3}
-.nav-links a.active::after{content:'';position:absolute;left:0;right:0;bottom:-2px;height:2px;background:#58a6ff;border-radius:1px}
-.nav-links a:hover{color:rgba(230,237,243,.7)}
+.nav-ext-links{display:flex;gap:.5rem;margin-left:auto}
+.nav-ext-links a{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;border-radius:7px;font-size:.76rem;font-weight:700;letter-spacing:.03em;text-decoration:none;transition:all .2s;font-family:'Carlito',Calibri,sans-serif}
+.nav-ext-links a.primary{background:#4361ee;color:#fff}
+.nav-ext-links a.primary:hover{background:#3352dd}
+.nav-ext-links a.secondary{background:rgba(230,237,243,.06);color:#e6edf3;border:1px solid rgba(230,237,243,.15)}
+.nav-ext-links a.secondary:hover{background:rgba(230,237,243,.1)}
 
-/* ───────── Hero (full viewport, light) ───────── */
+/* ───────── Left Floating Side Nav ───────── */
+.side-nav{position:fixed;top:50%;left:1.2rem;transform:translateY(-50%);z-index:199;display:flex;flex-direction:column;gap:.6rem}
+.side-nav a{display:block;padding:.45rem .85rem;font-size:.72rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:rgba(230,237,243,.3);text-decoration:none;border-left:2px solid transparent;transition:all .25s;font-family:'Carlito',Calibri,sans-serif;white-space:nowrap}
+.side-nav a:hover{color:rgba(230,237,243,.65)}
+.side-nav a.active{color:#e6edf3;border-left-color:#58a6ff}
+
+/* ───────── Hero ───────── */
 @keyframes heroShift{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
 @keyframes orbFloat1{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,-20px)}}
 @keyframes orbFloat2{0%,100%{transform:translate(0,0)}50%{transform:translate(-25px,15px)}}
@@ -54,16 +61,10 @@ nav.topnav.scrolled{background:rgba(13,17,23,.95);box-shadow:0 1px 3px rgba(0,0,
 .hero h1{font-family:'Plus Jakarta Sans','Carlito',sans-serif;font-size:clamp(2.4rem,5.8vw,4.2rem);line-height:1.12;letter-spacing:-.02em;max-width:1060px;margin-bottom:16px;font-weight:800;color:#e6edf3}
 .hero h1 em{font-style:normal;background:linear-gradient(135deg,#58a6ff,#bc8cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none}
 .hero .authors{color:rgba(230,237,243,.35);font-size:.88rem;margin:0 auto 2rem}
-.hero .btn-row{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
-.hero .btn-row a{display:inline-flex;align-items:center;gap:7px;padding:10px 22px;border-radius:8px;font-size:.84rem;font-weight:700;letter-spacing:.04em;text-decoration:none;transition:all .2s;font-family:'Carlito',Calibri,sans-serif}
-.hero .btn-row a.primary{background:#4361ee;color:#fff}
-.hero .btn-row a.primary:hover{background:#3352dd;transform:translateY(-2px);box-shadow:0 6px 22px rgba(67,97,238,.35),0 0 0 4px rgba(67,97,238,.15)}
-.hero .btn-row a.secondary{background:rgba(230,237,243,.06);color:#e6edf3;border:1px solid rgba(230,237,243,.15)}
-.hero .btn-row a.secondary:hover{background:rgba(230,237,243,.1);transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.2)}
 
 /* ───────── Hero Teaser ───────── */
-.hero-teaser{max-width:1060px;width:100%;margin-top:2.5rem}
-.hero-teaser img{width:100%;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.3),0 20px 60px rgba(0,0,0,.4);display:block;filter:invert(1) hue-rotate(180deg)}
+.hero-teaser{max-width:1280px;width:100%;margin-top:2.5rem}
+.hero-teaser video{width:100%;border-radius:14px;box-shadow:0 4px 12px rgba(0,0,0,.3),0 20px 60px rgba(0,0,0,.4);display:block}
 
 /* ───────── Sections ───────── */
 .section{padding:4.5rem 2rem;position:relative}
@@ -75,13 +76,17 @@ nav.topnav.scrolled{background:rgba(13,17,23,.95);box-shadow:0 1px 3px rgba(0,0,
 .section-title::after{content:'';position:absolute;left:0;bottom:0;width:52px;height:3px;background:linear-gradient(90deg,#58a6ff,#bc8cff);border-radius:3px;box-shadow:0 0 8px rgba(88,166,255,.25)}
 .section-subtitle{font-size:1.1rem;font-weight:700;margin-top:2.2rem;margin-bottom:.6rem;color:#e6edf3}
 
-/* ───────── Abstract ───────── */
-.abstract-text{font-size:1rem;color:#c9d1d9;padding-left:1.25rem;margin-top:.5rem;position:relative}
-.abstract-text::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#58a6ff,#bc8cff);border-radius:2px}
-.abstract-text p+p{margin-top:.7rem}
+/* ───────── Blog Prose ───────── */
+.blog-text{font-size:1.05rem;color:#c9d1d9;line-height:1.8}
+.blog-text p+p{margin-top:1rem}
+.blog-text strong{color:#e6edf3}
 
-/* ───────── Background intro text ───────── */
-.bg-text{font-size:.97rem;color:#8b949e;line-height:1.7}
+/* ───────── Callout (key insight block) ───────── */
+.callout{font-size:1rem;color:#c9d1d9;padding-left:1.25rem;margin:1.5rem 0;position:relative;line-height:1.75}
+.callout::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#58a6ff,#bc8cff);border-radius:2px}
+
+/* ───────── Section Divider ───────── */
+.section-divider{margin:2.8rem 0;height:1px;background:linear-gradient(90deg,transparent,#30363d,transparent)}
 
 /* ───────── Method Cards ───────── */
 .method-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.25rem;margin:1.5rem 0}
@@ -97,19 +102,10 @@ nav.topnav.scrolled{background:rgba(13,17,23,.95);box-shadow:0 1px 3px rgba(0,0,
 /* ───────── Figures ───────── */
 figure.fig{margin:2.2rem 0;text-align:center}
 figure.fig img{max-width:100%;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2),0 8px 32px rgba(0,0,0,.3);transition:transform .3s;filter:invert(1) hue-rotate(180deg)}
+figure.fig.no-invert img{filter:none}
 figure.fig:hover img{transform:scale(1.005)}
 figure.fig.fig-narrow img{max-width:85%;margin:0 auto}
-
-/* ───────── Q-Blocks ───────── */
-.q-block{margin-top:2.5rem;background:#161b22;border:1px solid #30363d;border-radius:16px;padding:1.8rem 2rem;position:relative;transition:box-shadow .3s;box-shadow:0 1px 2px rgba(0,0,0,.15),0 4px 16px rgba(0,0,0,.1)}
-.q-block::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,#58a6ff,#bc8cff);border-radius:16px 0 0 16px}
-.q-block:hover{box-shadow:0 2px 4px rgba(0,0,0,.2),0 12px 40px rgba(0,0,0,.25),inset 0 0 0 1px rgba(88,166,255,.06)}
-.q-header{display:flex;align-items:baseline;gap:.7rem;font-size:1.05rem;font-weight:700;color:#e6edf3;margin-bottom:.5rem;line-height:1.45}
-.q-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#58a6ff,#bc8cff);color:#fff;font-size:.78rem;font-weight:700;flex-shrink:0}
-.q-summary{font-size:.94rem;color:#8b949e;margin-bottom:1.2rem;padding-left:calc(32px + .7rem)}
-
-/* ───────── Q4 Divider ───────── */
-.q4-divider{margin:2.8rem 0;height:1px;background:linear-gradient(90deg,transparent,#30363d,transparent)}
+figure.fig figcaption{font-size:.85rem;color:#8b949e;margin-top:.8rem;line-height:1.5;max-width:85%;margin-left:auto;margin-right:auto}
 
 /* ───────── Tabs ───────── */
 .tabs{display:flex;gap:.5rem;margin-bottom:1rem;flex-wrap:wrap}
@@ -136,8 +132,8 @@ figure.fig.fig-narrow img{max-width:85%;margin:0 auto}
 .speed-badge{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.65);color:#fff;font-size:.58rem;font-weight:700;padding:2px 8px;border-radius:8px;pointer-events:none;backdrop-filter:blur(4px);letter-spacing:.02em}
 
 /* ───────── Video Cards (Real-world) ───────── */
-.rw-video-wrap{position:relative;overflow:hidden;border-radius:10px;background:#000}
-.rw-video-wrap video{width:100%;display:block}
+.rw-video-wrap{position:relative;overflow:hidden;border-radius:10px;background:#000;aspect-ratio:10/9}
+.rw-video-wrap video{width:100%;height:100%;object-fit:fill;display:block}
 .category-tag{position:absolute;top:6px;left:6px;color:#fff;font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:8px;z-index:2;pointer-events:none;backdrop-filter:blur(4px)}
 .rw-video-wrap .speed-badge{z-index:2}
 
@@ -162,119 +158,136 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
   .method-cards{grid-template-columns:1fr}
   .carousel-track{grid-template-columns:1fr}
   .carousel-btn{display:none}
-  .q-block{padding:1.3rem 1.2rem}
-  .q-summary{padding-left:0}
-  .q-header{font-size:.92rem}
   .nav-inner{padding:0 1rem;gap:1rem}
-  .nav-links{gap:.6rem;font-size:.7rem}
+  .nav-ext-links a{padding:4px 10px;font-size:.68rem}
+  .side-nav{display:none}
   figure.fig.fig-narrow img{max-width:100%}
 }
 </style>
 </head>
 <body>
 
-<!-- ════════════════ NAV ════════════════ -->
+<!-- ════════════════ TOP BAR ════════════════ -->
 <nav class="topnav" id="topnav">
   <div class="nav-inner">
     <a href="#" class="nav-logo">DIAL</a>
-    <div class="nav-links" id="nav-links">
-      <a href="#abstract" data-section="abstract">Abstract</a>
-      <a href="#background" data-section="background">Background</a>
-      <a href="#method" data-section="method">Method</a>
-      <a href="#experiments" data-section="experiments">Experiments</a>
+    <div class="nav-ext-links">
+      <a href="DIAL.pdf" class="primary">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Paper
+      </a>
+      <a href="#" class="secondary">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        Code
+      </a>
     </div>
   </div>
 </nav>
 
-<!-- ════════════════ HERO (full viewport, light, with teaser) ════════════════ -->
+<!-- ════════════════ LEFT SIDE NAV ════════════════ -->
+<div class="side-nav" id="side-nav">
+  <a href="#intro" data-section="intro">Intro</a>
+  <a href="#why-hard" data-section="why-hard">Background</a>
+  <a href="#how-it-works" data-section="how-it-works">Method</a>
+  <a href="#sim-results" data-section="sim-results">Simulation</a>
+  <a href="#human-data" data-section="human-data">Scaling</a>
+  <a href="#real-world" data-section="real-world">Real World</a>
+  <a href="#what-learns" data-section="what-learns">Insights</a>
+</div>
+
+<!-- ════════════════ HERO ════════════════ -->
 <section class="hero" id="hero">
   <div class="hero-dots"></div>
   <h1 class="hero-anim d1"><em>DIAL:</em> <em>D</em>ecoupling <em>I</em>ntent and <em>A</em>ction via <em>L</em>atent World Modeling for End-to-End VLA</h1>
   <p class="authors hero-anim d2">Authors (placeholder)</p>
-  <div class="btn-row hero-anim d3">
-    <a href="DIAL.pdf" class="primary">
-      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      Paper
-    </a>
-    <a href="#" class="secondary">
-      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
-      Code
-    </a>
-  </div>
-  <div class="hero-teaser hero-anim d4">
-    <img src="figures/teaser.png" alt="DIAL Framework Overview">
+  <div class="hero-teaser hero-anim d3">
+    <video src="videos/teaser_live_dark.mp4" autoplay loop muted playsinline></video>
   </div>
 </section>
 
-<!-- ════════════════ ABSTRACT ════════════════ -->
-<section class="section alt" id="abstract">
+<!-- ════════════════ INTRODUCTION ════════════════ -->
+<section class="section alt" id="intro">
   <div class="section-inner reveal">
-    <h2 class="section-title">Abstract</h2>
-    <div class="abstract-text">
-      <p>The development of Vision-Language-Action (VLA) models has been significantly accelerated by pre-trained Vision-Language Models (VLMs). However, most existing end-to-end VLAs treat the VLM primarily as a multimodal encoder, directly mapping vision-language features to low-level actions. This paradigm underutilizes the VLM's potential role in high-level decision making and introduces training instability, frequently causing degradation of its rich semantic representations.</p>
-      <p>To address these limitations, we introduce <strong>DIAL</strong> (<strong>D</strong>ecoupling <strong>I</strong>ntent and <strong>A</strong>ction via <strong>L</strong>atent World Modeling), a framework that bridges high-level decision making and low-level motor execution through a differentiable latent intent bottleneck. Specifically, a VLM-based System-2 performs latent world modeling by synthesizing the latent visual foresight within the native feature space of the VLM's vision encoder; this foresight explicitly encodes the VLM's intent and serves as the structural bottleneck. A lightweight System-1 policy then decodes this predicted intent together with the current observation into precise robot actions via latent inverse dynamics.</p>
-      <p>Extensive experiments on the RoboCasa GR1 Tabletop benchmark demonstrate that DIAL establishes a new state of the art, achieving superior performance with <strong>10&times; fewer demonstrations</strong> than prior methods. Furthermore, by leveraging heterogeneous human demonstrations, DIAL learns physically grounded manipulation priors and exhibits robust <strong>zero-shot generalization</strong> to unseen objects and novel configurations during real-world deployment on a humanoid robot.</p>
+    <div class="blog-text">
+      <p>The development of <strong>Vision-Language-Action (VLA)</strong> models has been significantly accelerated by pre-trained Vision-Language Models (VLMs). These powerful foundation models excel at jointly reasoning over visual inputs and language instructions, a capability that in principle should make them ideal brains for robotic manipulation. Yet most existing end-to-end VLAs treat the VLM as little more than a multimodal encoder, directly mapping its features to low-level motor commands. This paradigm underutilizes the VLM&rsquo;s potential for high-level decision making and introduces training instability that frequently degrades its rich semantic representations.</p>
+
+      <p>We introduce <strong>DIAL</strong> (<strong>D</strong>ecoupling <strong>I</strong>ntent and <strong>A</strong>ction via <strong>L</strong>atent World Modeling), a framework that bridges high-level reasoning and low-level execution through a <strong>differentiable latent intent bottleneck</strong>. Rather than mapping VLM features directly to actions, we ask the VLM to predict the future visual state <em>in its own native ViT feature space</em>. These features carry rich semantic structure rather than raw pixel-level appearance, so the prediction naturally encodes the VLM&rsquo;s <strong>intent</strong>: what should change in the scene as a result of the robot&rsquo;s action. This latent intent is the sole channel connecting the VLM to a lightweight motor policy, structurally encouraging the policy to ground every action in the VLM&rsquo;s foresight rather than learning shortcuts around it. Because both systems share the same frozen ViT, each can be pre-trained independently and then unified end-to-end with no representation gap to bridge.</p>
+
+      <p>DIAL establishes a new state of the art on the RoboCasa GR1 Tabletop benchmark, achieving superior performance with <strong>10&times; fewer demonstrations</strong> than prior methods. By leveraging heterogeneous human demonstrations, it learns physically grounded manipulation priors and exhibits robust <strong>zero-shot generalization</strong> to unseen objects and novel configurations during real-world deployment on our humanoid robot.</p>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ BACKGROUND ════════════════ -->
-<section class="section" id="background">
+<!-- ════════════════ WHY IS THIS HARD? ════════════════ -->
+<section class="section" id="why-hard">
   <div class="section-inner reveal">
-    <h2 class="section-title">Background</h2>
-    <div class="bg-text">
-      <p>Pre-trained VLMs provide a powerful cognitive foundation for robotic manipulation, yet translating their high-level intent into precise motor control remains an open challenge. As illustrated below, existing approaches fall into two paradigms, each with a fundamental limitation. <strong>Hierarchical planners</strong> prompt VLMs to generate text or code plans for a separate low-level controller&mdash;but this non-differentiable interface blocks action gradients from refining the VLM's physical understanding. <strong>End-to-end VLAs</strong> directly predict actions, yet they often reduce the VLM to a passive encoder; even with auxiliary foresight objectives, the absence of a strict structural bottleneck still permits shortcut learning that bypasses true intent grounding. DIAL resolves this dilemma by introducing a <strong>differentiable latent bottleneck</strong> that requires the policy to bridge the gap between current visual features and the VLM's predicted latent foresight, ensuring that execution is inherently anchored to the VLM's intent.</p>
+    <h2 class="section-title">Why is this hard?</h2>
+    <div class="blog-text">
+      <p>Translating a VLM&rsquo;s high-level understanding into precise motor control remains one of the central challenges in embodied AI. Existing approaches fall into two paradigms, each with a fundamental limitation.</p>
+
+      <p><strong>Hierarchical planners</strong> prompt VLMs to generate text or code plans for a separate low-level controller. While modular, this design introduces a non-differentiable interface that blocks action gradients from ever refining the VLM&rsquo;s physical understanding.</p>
+
+      <p><strong>End-to-end VLAs</strong> take the opposite approach: they directly predict actions from the VLM&rsquo;s representations. This is fully differentiable and allows tighter integration between perception and control, but it often reduces the VLM to a passive encoder. Even methods that add auxiliary foresight objectives suffer from a critical weakness&mdash;without a strict structural bottleneck, the policy can learn shortcuts that bypass true intent grounding.</p>
     </div>
+
     <figure class="fig reveal">
-      <img src="figures/related_work.png" alt="VLA Architecture Comparison">
+      <img src="figures/related_work.png" alt="Comparison of VLA architectures">
+      <figcaption>Existing VLA paradigms and their limitations. Hierarchical planners (left) suffer from non-differentiable gaps. End-to-end VLAs (middle) often treat foresight as optional context. DIAL (right) enforces a structural bottleneck through latent intent prediction.</figcaption>
     </figure>
+
   </div>
 </section>
 
-<!-- ════════════════ METHOD ════════════════ -->
-<section class="section alt" id="method">
+<!-- ════════════════ HOW DOES IT WORK? ════════════════ -->
+<section class="section alt" id="how-it-works">
   <div class="section-inner reveal">
-    <h2 class="section-title">Method</h2>
-    <p style="color:#8b949e;margin-bottom:1.5rem">DIAL adopts a dual-system architecture that decouples high-level reasoning from low-level execution through a differentiable latent intent bottleneck. As shown below, <strong>System-2</strong> (the &ldquo;Brain&rdquo;), built upon a pre-trained VLM backbone, performs latent world modeling to synthesize a <em>latent intent</em> that predicts the future visual state in the VLM&rsquo;s native ViT feature space. <strong>System-1</strong> (the &ldquo;Cerebellum&rdquo;) resolves the gap between the current observation and this intent to produce motor commands, acting as a latent inverse dynamics model. This design elevates the VLM from a passive encoder to an active decision maker whose goal-directed foresight structurally governs downstream execution. Both systems share the same frozen ViT, establishing a unified latent space that naturally supports independent decoupled warmup (as indicated by the switches in the figure) followed by seamless end-to-end optimization, where action-aware gradients flow back through the latent intent into the VLM.</p>
+    <h2 class="section-title">How does it work?</h2>
+    <div class="blog-text">
+      <p>DIAL implements this idea as a <strong>dual-system architecture</strong>, as illustrated below. <strong>System-2</strong> (top, the &ldquo;Brain&rdquo;) is the VLM performing latent world modeling; <strong>System-1</strong> (bottom, the &ldquo;Cerebellum&rdquo;) is a lightweight inverse dynamics policy that turns the predicted intent into motor commands.</p>
+    </div>
 
-    <figure class="fig reveal">
-      <img src="figures/model_overview.png" alt="DIAL Architecture">
+    <figure class="fig no-invert reveal">
+      <video id="model-overview-video" src="videos/model_overview_dark.mp4" autoplay muted playsinline style="width:80%;margin:0 auto;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.2),0 8px 32px rgba(0,0,0,.3);display:block;transform:scaleY(0.95)"></video>
+      <figcaption>Dual-system architecture of DIAL. System-2 synthesizes latent foresight from language and visual input. System-1 fuses current observation with predicted intent for action generation via flow matching. Training switches from decoupled warmup to end-to-end optimization.</figcaption>
     </figure>
 
     <div class="method-cards">
       <div class="method-card reveal">
         <span class="card-label sys2">System-2</span>
-        <h4>Predictive Intent via Latent World Modeling</h4>
-        <p>The VLM processes the current visual observation and language instruction. Learnable query tokens are appended to the LLM sequence; their output representations are projected through an MLP head to synthesize the latent intent&mdash;a spatially structured prediction of the future visual state, trained via MSE alignment with the ground-truth ViT features of the future observation.</p>
+        <h4>Latent World Modeling</h4>
+        <p>Learnable query tokens are appended to the VLM&rsquo;s LLM sequence. Their output representations are projected through an MLP head to synthesize the latent intent, trained via MSE alignment with ground-truth ViT features of the future observation.</p>
       </div>
       <div class="method-card reveal">
         <span class="card-label sys1">System-1</span>
-        <h4>Reactive Control as Latent Inverse Dynamics</h4>
-        <p>A lightweight self-attention module fuses the current ViT features with the predicted latent intent, producing a spatially-aware conditioning signal. A DiT-based decoder then takes this signal via cross-attention, along with the projected proprioceptive state and noisy action tokens, to generate action chunks via flow matching&mdash;resolving state-transition dynamics entirely in latent space.</p>
+        <h4>Latent Inverse Dynamics</h4>
+        <p>A self-attention module fuses current ViT features with the predicted latent intent. A DiT-based decoder then generates action chunks via flow matching, conditioned on this fused signal and the robot&rsquo;s proprioceptive state.</p>
       </div>
       <div class="method-card reveal">
         <span class="card-label train">Training</span>
-        <h4>Decoupled Warmup &rarr; End-to-End Synergy</h4>
-        <p><strong>Stage 1</strong> pre-trains both systems independently: System-2 learns visual foresight via the world modeling loss, while System-1 learns sensorimotor control conditioned on ground-truth future features. <strong>Stage 2</strong> unifies the pipeline: System-1 is conditioned on System-2's synthesized intent, enabling gradients to flow back through the latent bottleneck and into the VLM, forcing the intent to become explicitly action-aware.</p>
+        <h4>Decoupled Warmup &rarr; End-to-End</h4>
+        <p><strong>Stage 1:</strong> System-2 learns foresight via the world modeling loss; System-1 learns control conditioned on ground-truth future features. <strong>Stage 2:</strong> System-1 switches to System-2&rsquo;s predicted intent, enabling action-aware gradients to flow back into the VLM.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ EXPERIMENTS ════════════════ -->
-<section class="section" id="experiments">
+<!-- ════════════════ SIMULATION BENCHMARK ════════════════ -->
+<section class="section" id="sim-results">
   <div class="section-inner">
-    <h2 class="section-title reveal">Experiments</h2>
-    <p class="reveal" style="color:#8b949e;margin-bottom:.5rem">We evaluate DIAL through five core research questions spanning performance, architecture, scalability, real-world robustness, and interpretability.</p>
+    <h2 class="section-title reveal">Simulation benchmark results</h2>
+    <div class="blog-text reveal">
+      <p>We evaluate DIAL on the <strong>RoboCasa GR1 Tabletop</strong> benchmark, which spans 24 tasks across two categories: Pick &amp; Place (18 tasks) and Articulated Tasks (6 tasks involving cabinets, drawers, and microwaves). With full training data (1,000 trajectories per task), DIAL achieves <strong>70.2%</strong> average success rate, substantially outperforming the strongest prior method FLARE (55.0%) and advanced VLA architectures such as GR00T-N1.6 (47.6%).</p>
+    </div>
 
-    <!-- ── Q1 ── -->
-    <div class="q-block reveal">
-      <div class="q-header"><span class="q-num">Q1</span> Does DIAL outperform state-of-the-art baselines on the public humanoid simulation benchmark?</div>
-      <p class="q-summary">On the full RoboCasa GR1 Tabletop benchmark (1,000 trajectories per task), DIAL achieves <strong>70.2%</strong> average success rate, substantially outperforming the strongest baseline FLARE (55.0%) and advanced VLA architectures such as GR00T-N1.6 (47.6%). The consistent margin across both Pick &amp; Place (68.9%) and Articulated Tasks (74.3%) highlights DIAL's balanced capability across distinct task categories.</p>
-      <figure class="fig">
-        <img src="figures/results_robocasa_full.png" alt="Full-data results">
-      </figure>
-      <h3 class="section-subtitle">Simulation Demo Videos</h3>
+    <figure class="fig reveal">
+      <img src="figures/results_robocasa_full.png" alt="Full-data benchmark results">
+    </figure>
+
+    <div class="blog-text reveal">
+      <p>We show some example rollouts from the simulation benchmark below. DIAL handles both object rearrangement and articulated fixture manipulation.</p>
+    </div>
+
+    <div class="reveal">
       <div class="tabs" id="sim-tabs">
         <button class="active" data-tab="pp">Pick &amp; Place</button>
         <button data-tab="art">Articulated Tasks</button>
@@ -293,53 +306,84 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
       </div>
     </div>
 
-    <!-- ── Q2 ── -->
-    <div class="q-block reveal">
-      <div class="q-header"><span class="q-num">Q2</span> How sample-efficient is DIAL, and which architectural designs are essential for grounding the VLM's intent in low-level control?</div>
-      <p class="q-summary">Under a strict few-shot setting (100 trajectories per task), DIAL reaches <strong>58.3%</strong>, surpassing FLARE (55.0%) trained with 10&times; more data, demonstrating strong sample efficiency. Systematic ablations further reveal three essential design choices: (i) explicit world modeling grounds the VLM in future physical states; (ii) DIAL's structural bottleneck prevents shortcut learning where loosely coupled variants (SEER, FLARE-style) plateau below 52%; (iii) operating in the VLM's native ViT feature space is critical, as replacing it with DINO-v2 drops performance to 47.2% due to feature-space misalignment between the two systems.</p>
-      <figure class="fig">
-        <img src="figures/results_robocasa.png" alt="Few-shot and ablation results">
-      </figure>
+    <div class="section-divider"></div>
+
+    <div class="blog-text reveal">
+      <p>Perhaps more striking is DIAL&rsquo;s <strong>sample efficiency</strong>. Under a strict few-shot setting with only 100 trajectories per task (10% of the full data), DIAL reaches <strong>58.3%</strong>&mdash;surpassing FLARE&rsquo;s 55.0% achieved with 10&times; more data. Systematic ablations reveal three essential design choices behind this efficiency:</p>
     </div>
 
-    <!-- ── Q3 ── -->
-    <div class="q-block reveal">
-      <div class="q-header"><span class="q-num">Q3</span> Can DIAL effectively scale by leveraging heterogeneous human demonstrations to enhance both in-distribution and OOD performance?</div>
-      <p class="q-summary">By incorporating cross-embodiment human demonstrations from the EgoDex <em>basic_pick_place</em> subset, DIAL boosts Pick &amp; Place success from 56.0% to 60.8% and substantially improves OOD generalization: +6.3% on unseen objects, +5.7% on unseen combinations, and +3.1% on unseen appearances. The average OOD success rate rises from 46.2% to 51.2%, demonstrating effective cross-embodiment learning. Since this subset contains only rearrangement interactions without articulated objects, Articulated Tasks see no improvement due to domain mismatch, while Pick &amp; Place and OOD scenarios benefit substantially.</p>
-      <figure class="fig">
-        <img src="figures/results_robocasa_egodex_narrow.png" alt="Human data scalability">
-      </figure>
+    <div class="callout reveal">
+      <p><strong>World modeling matters.</strong> Without explicit world modeling, even a fine-tuned VLA baseline (GR00T-Qwen2.5-FT) reaches only 30.6%. Adding predictive foresight objectives lifts all variants well above this ceiling, confirming that grounding the VLM in future physical states is a prerequisite for strong performance.</p>
+      <p style="margin-top:.7rem"><strong>The bottleneck is critical.</strong> Simply adding world modeling is not enough if the coupling is loose. Variants that concatenate predicted future tokens as auxiliary context (SEER-style, 49.6%) or use foresight only as a training-time regularizer (FLARE-style, 51.9%) all plateau below 52%. DIAL&rsquo;s structural bottleneck, where System-1 <em>must</em> derive actions by bridging current and predicted future states, reaches 58.3%.</p>
+      <p style="margin-top:.7rem"><strong>Shared latent space is key.</strong> Replacing the VLM&rsquo;s native ViT features with DINO-v2 as the prediction target drops performance from 58.3% to 47.2%. Even though DINO features carry strong geometric priors, the cross-manifold misalignment between reasoning and control undermines intent transfer. Both systems must operate in the same feature space.</p>
     </div>
 
-    <!-- ── Q4 ── -->
-    <div class="q-block reveal">
-      <div class="q-header"><span class="q-num">Q4</span> Can DIAL achieve robust real-world generalization, and what role does the decoupled warmup play in achieving this?</div>
-      <p class="q-summary">We validate DIAL on the IRON-R01 humanoid robot with two tasks designed analogous to representative EgoDex subsets for cross-embodiment learning: <strong>Pick &amp; Place</strong> (mimicking EgoDex <em>basic_pick_place</em>) and <strong>Pouring</strong> (mimicking EgoDex <em>pour</em>). DIAL achieves 77.5% in-distribution success and 58.3% OOD success. Decoupled warmup is critical: removing it drops ID performance to 57.5% and OOD from 58.3% to 30.0%. Human data pre-training is equally vital, with its removal degrading OOD success from 58.3% to 26.7%.</p>
-      <h3 class="section-subtitle">Real-World Task Design and Data Sources</h3>
-      <figure class="fig">
-        <img src="figures/demo_task.png" alt="Real-world tasks and data sources">
-      </figure>
+    <figure class="fig reveal">
+      <img src="figures/results_robocasa.png" alt="Few-shot results and ablation study">
+      <figcaption>Few-shot performance and ablation results. DIAL with 10% data outperforms FLARE with full data. Each ablation isolates a critical design choice.</figcaption>
+    </figure>
+  </div>
+</section>
 
-      <!-- ID block -->
-      <h3 class="section-subtitle">In-Distribution Performance</h3>
-      <figure class="fig">
-        <img src="figures/results_real_robot_id.png" alt="In-distribution results">
-      </figure>
+<!-- ════════════════ SCALING WITH HUMAN DATA ════════════════ -->
+<section class="section alt" id="human-data">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Scaling with human demonstrations</h2>
+    <div class="blog-text">
+      <p>DIAL&rsquo;s decoupled design naturally accommodates <strong>heterogeneous data sources</strong>, including human demonstrations from a completely different embodiment. To evaluate how well these priors transfer, we construct three categories of OOD tasks by varying the simulation assets: unseen object types, unseen source-target container combinations, and unseen visual appearances. By incorporating cross-embodiment human demonstrations from the EgoDex <em>basic_pick_place</em> subset, DIAL boosts the average OOD success rate from 46.2% to <strong>51.2%</strong>, with consistent gains across all three categories. In-distribution Pick &amp; Place also improves from 56.0% to 60.8%.</p>
+
+      <p>Since the EgoDex subset contains only rearrangement interactions, articulated tasks see no improvement, but this domain-specific limitation further confirms that the gains stem from genuine cross-embodiment transfer rather than a general regularization effect.</p>
+    </div>
+
+    <figure class="fig reveal">
+      <img src="figures/results_robocasa_egodex_narrow.png" alt="Impact of human demonstrations">
+      <figcaption>Impact of EgoDex human demonstrations. Cross-embodiment data improves in-distribution Pick &amp; Place and all three OOD generalization categories.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ════════════════ REAL-WORLD GENERALIZATION ════════════════ -->
+<section class="section" id="real-world">
+  <div class="section-inner">
+    <h2 class="section-title reveal">Real-world generalization</h2>
+    <div class="blog-text reveal">
+      <p>We validate DIAL on the <strong>IRON-R01 humanoid robot</strong> with two tasks designed to match representative EgoDex subsets for cross-embodiment learning: <strong>Pick &amp; Place</strong> (analogous to EgoDex <em>basic_pick_place</em>) and <strong>Pouring</strong> (analogous to EgoDex <em>pour</em>). All models are first pre-trained a mixture of human and robot demonstrations, then fine-tuned on the task-specific robot trajectories. Under this protocol, DIAL achieves <strong>77.5%</strong> in-distribution success and <strong>58.3%</strong> out-of-distribution success.</p>
+    </div>
+
+    <figure class="fig no-invert reveal">
+      <img src="figures/demo_tasks_dark.png" alt="Real-world task design and data sources">
+      <figcaption>Real-world task design. Human EgoDex demonstrations (left) provide cross-embodiment priors for Pick &amp; Place and Pouring tasks executed by the IRON-R01 humanoid (right).</figcaption>
+    </figure>
+
+    <div class="blog-text reveal">
+      <p>Two factors prove critical for real-world performance. First, <strong>decoupled warmup</strong> is essential for ensuring training stability, playing a pivotal role in maintaining robust in-distribution and OOD performance on physical hardware. Second, <strong>human data pre-training</strong> is equally vital; without it, the OOD success rate drops significantly from 58.3% to just 26.7%. Together, these results confirm that DIAL&rsquo;s training recipe is not merely a simulation convenience but a genuine requirement for robust real-world deployment.</p>
+    </div>
+
+    <!-- In-Distribution -->
+    <h3 class="section-subtitle reveal">In-Distribution Performance</h3>
+    <figure class="fig reveal">
+      <img src="figures/results_real_robot_id.png" alt="In-distribution results">
+    </figure>
+    <div class="reveal">
       <div class="carousel" id="carousel-rw-id">
         <button class="carousel-btn prev" data-dir="-1"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
         <div class="carousel-track" id="rw-id-row"></div>
         <button class="carousel-btn next" data-dir="1"><svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg></button>
         <div class="carousel-counter"></div>
       </div>
+    </div>
 
-      <!-- Divider -->
-      <div class="q4-divider"></div>
+    <div class="section-divider"></div>
 
-      <!-- OOD block -->
-      <h3 class="section-subtitle">Out-of-Distribution Performance</h3>
-      <figure class="fig">
-        <img src="figures/results_real_robot_ood.png" alt="OOD results">
-      </figure>
+    <!-- Out-of-Distribution -->
+    <h3 class="section-subtitle reveal">Out-of-Distribution Performance</h3>
+    <div class="blog-text reveal">
+      <p>We test three types of generalization: <strong>combinatorial</strong> (multiple familiar objects present simultaneously, requiring language-grounded disambiguation), <strong>distractor robustness</strong> (unseen objects introduced as visual clutter), and <strong>instance-level transfer</strong> (novel object instances with unseen geometries or appearances in the pouring task). DIAL handles all three with no task-specific adaptation.</p>
+    </div>
+    <figure class="fig reveal">
+      <img src="figures/results_real_robot_ood.png" alt="OOD results">
+    </figure>
+    <div class="reveal">
       <div class="carousel" id="carousel-rw-ood">
         <button class="carousel-btn prev" data-dir="-1"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
         <div class="carousel-track" id="rw-ood-row"></div>
@@ -347,19 +391,45 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
         <div class="carousel-counter"></div>
       </div>
     </div>
+  </div>
+</section>
 
-    <!-- ── Q5 ── -->
-    <div class="q-block reveal">
-      <div class="q-header"><span class="q-num">Q5</span> Do the predicted latent foresights capture semantically meaningful, task-relevant dynamics in the VLM's native feature space?</div>
-      <p class="q-summary">We visualize the latent features of the current observation, ground-truth future, and predicted foresight by mapping their first three PCA components to RGB. The predicted foresight closely mirrors the ground-truth future in task-relevant regions while diverging from the current observation where manipulation is expected. The last column shows per-patch cosine distance between foresight and current features, with warmer colors indicating greater anticipated change. These results confirm that System-2 actively anticipates meaningful state transitions rather than merely reconstructing the current scene, generating a coherent &ldquo;visual roadmap&rdquo; for System-1.</p>
-      <figure class="fig fig-narrow">
-        <img src="figures/latent_visualization.png" alt="Latent visualization">
-      </figure>
+<!-- ════════════════ WHAT DOES DIAL LEARN? ════════════════ -->
+<section class="section alt" id="what-learns">
+  <div class="section-inner reveal">
+    <h2 class="section-title">What does DIAL actually learn?</h2>
+    <div class="blog-text">
+      <p>To understand what System-2 is doing internally, we visualize its latent representations by mapping the first three PCA components to RGB channels. The figure below shows four quantities: the current observation&rsquo;s latent features, the ground-truth future features, DIAL&rsquo;s predicted foresight, and a cosine distance heatmap highlighting where the model anticipates the most change.</p>
+
+      <p>The predicted foresight closely mirrors the ground-truth future in task-relevant regions while diverging from the current observation precisely where manipulation is expected. The cosine distance map (rightmost column, warmer colors = more anticipated change) confirms that System-2 is not merely reconstructing the current scene&mdash;it is actively anticipating meaningful state transitions, generating a coherent <strong>&ldquo;visual roadmap&rdquo;</strong> for System-1 to follow.</p>
+    </div>
+
+    <figure class="fig fig-narrow no-invert reveal">
+      <img src="figures/latent_visualization_dark.png" alt="Latent foresight visualization">
+      <figcaption>PCA visualization of latent features. Predicted foresight aligns with the ground-truth future in task-relevant regions. The cosine distance heatmap (right) reveals where the model anticipates the greatest change.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ════════════════ WHERE DO WE GO FROM HERE? ════════════════ -->
+<section class="section" id="conclusion">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Where do we go from here?</h2>
+    <div class="blog-text">
+      <!-- <p>We showed that decoupling a VLM&rsquo;s <em>intent</em> from the policy&rsquo;s <em>actions</em> through a latent world modeling bottleneck yields a VLA that is both data-efficient and broadly generalizable. DIAL achieves state-of-the-art results in simulation, transfers to real-world humanoid manipulation, and learns useful priors from human demonstrations&mdash;all without sacrificing the VLM&rsquo;s pre-trained knowledge.</p>
+
+      <p>There is plenty left to explore. Scaling up the action decoder, compressing latent tokens for efficiency, fine-tuning the ViT encoder end-to-end with EMA stabilization, and extending to action-free video data are all promising directions. Looking further ahead, we believe that latent world modeling should be integrated into VLM <em>pre-training</em> itself, producing foundation models that natively think in terms of physical state transitions. On the control side, modular System-1 experts could be hot-swapped for different robots while sharing a single System-2 brain&mdash;a step toward truly universal embodied intelligence.</p> -->
+    
+      <p>We demonstrated that decoupling a VLM&rsquo;s <em>cognitive intent</em> from a policy&rsquo;s <em>physical actions</em> via latent world modeling yields a highly data-efficient and generalizable VLA. DIAL achieves state-of-the-art results in simulation and seamlessly transfers to real-world humanoid manipulation. Its two-stage training paradigm allows action-aware gradients to refine the VLM in a controlled manner, avoiding the representation collapse that commonly plagues naive end-to-end VLA training.</p>
+
+      <p>Several directions can extend this framework. On the architecture side, scaling up System-1&rsquo;s capacity, compressing latent tokens for efficiency, and fine-tuning the ViT encoder end-to-end are natural next steps. On the data side, DIAL&rsquo;s predictive objective is well-suited to leverage massive, <em>action-free</em> human videos, since latent world modeling requires only visual observations and no action labels.</p>
+
+      <p>Looking ahead, DIAL&rsquo;s decoupled design opens a modular path for robotic intelligence. Because System-1 and System-2 communicate solely through a shared latent interface, motor experts trained for a specific robot can be paired with increasingly capable VLMs as they become available, without retraining the entire pipeline. More broadly, integrating latent world modeling into VLM pre-training itself could produce foundation models with a native understanding of physical dynamics, further closing the gap between semantic reasoning and embodied control.</p>
     </div>
   </div>
 </section>
 
-<!-- ════════════════ BIBTEX ════════════════ -->
+<!-- ════════════════ CITATION ════════════════ -->
 <section class="section alt" id="bibtex">
   <div class="section-inner reveal">
     <h2 class="section-title">Citation</h2>
@@ -388,13 +458,13 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
     topnav.classList.toggle('scrolled', window.scrollY > 80);
   }, {passive:true});
 
-  /* ── Active nav tracking ── */
+  /* ── Active side-nav tracking ── */
   var sections = document.querySelectorAll('section[id]');
-  var navLinks = document.querySelectorAll('.nav-links a[data-section]');
+  var sideLinks = document.querySelectorAll('.side-nav a[data-section]');
   var navObs = new IntersectionObserver(function(entries){
     entries.forEach(function(e){
       if(e.isIntersecting){
-        navLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-section') === e.target.id); });
+        sideLinks.forEach(function(a){ a.classList.toggle('active', a.getAttribute('data-section') === e.target.id); });
       }
     });
   }, {rootMargin:'-30% 0px -60% 0px'});
@@ -571,10 +641,19 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
     });
   }, {rootMargin:'200px 0px'});
 
-  document.querySelectorAll('video').forEach(function(v){
+  document.querySelectorAll('video[data-src]').forEach(function(v){
     v.addEventListener('loadedmetadata', function(){ this.playbackRate = 2.0; });
     videoObs.observe(v);
   });
+
+  /* ── Model overview video: pause 10s then replay ── */
+  var moVideo = document.getElementById('model-overview-video');
+  if(moVideo){
+    moVideo.addEventListener('ended', function(){
+      var v = this;
+      setTimeout(function(){ v.currentTime = 0; v.play().catch(function(){}); }, 10000);
+    });
+  }
 
   /* ── Simulation videos: loop only first 3/4 ── */
   document.querySelectorAll('#sim-video-pp video, #sim-video-art video').forEach(function(v){
