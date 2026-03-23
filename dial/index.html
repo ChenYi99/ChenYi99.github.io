@@ -203,7 +203,7 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
   <h1 class="hero-anim d1"><em>DIAL:</em> <em>D</em>ecoupling <em>I</em>ntent and <em>A</em>ction via <em>L</em>atent World Modeling for End-to-End VLA</h1>
   <p class="authors hero-anim d2">Authors (placeholder)</p>
   <div class="hero-teaser hero-anim d3">
-    <video id="teaser-video" src="videos/teaser_live_dark.mp4" autoplay muted playsinline controls></video>
+    <video id="teaser-video" src="videos/teaser_last3s.mp4" poster="figures/teaser_poster.jpg" autoplay loop muted playsinline controls></video>
   </div>
 </section>
 
@@ -654,21 +654,35 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
     videoObs.observe(v);
   });
 
-  /* ── Teaser video: start from last 5s, then loop from beginning ── */
+  /* ── Teaser video: progressive loading ── */
   var teaserV = document.getElementById('teaser-video');
   if(teaserV){
-    var teaserFirstPlay = true;
-    teaserV.addEventListener('loadedmetadata', function(){
-      this.playbackRate = 2.0;
-      if(teaserFirstPlay){
-        this.currentTime = Math.max(0, this.duration - 10);
-      }
+    teaserV.addEventListener('loadedmetadata', function(){ this.playbackRate = 2.0; });
+
+    var fullVideo = document.createElement('video');
+    fullVideo.preload = 'auto';
+    fullVideo.src = 'videos/teaser_live_dark.mp4';
+    var fullReady = false;
+
+    fullVideo.addEventListener('canplaythrough', function(){
+      fullReady = true;
+      switchToFull();
     });
-    teaserV.addEventListener('ended', function(){
-      teaserFirstPlay = false;
-      this.currentTime = 0;
-      this.play().catch(function(){});
-    });
+
+    function switchToFull(){
+      if(!fullReady) return;
+      teaserV.pause();
+      teaserV.removeAttribute('loop');
+      teaserV.src = 'videos/teaser_live_dark.mp4';
+      teaserV.load();
+      teaserV.addEventListener('loadedmetadata', function onFullMeta(){
+        teaserV.removeEventListener('loadedmetadata', onFullMeta);
+        teaserV.playbackRate = 2.0;
+        teaserV.loop = true;
+        teaserV.currentTime = 0;
+        teaserV.play().catch(function(){});
+      });
+    }
   }
 
   /* ── Model overview video: pause 10s then replay ── */
