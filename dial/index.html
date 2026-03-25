@@ -62,7 +62,13 @@ nav.topnav.scrolled{background:rgba(13,17,23,.95);box-shadow:0 1px 3px rgba(0,0,
 .hero>*{position:relative;z-index:1}
 .hero h1{font-family:'Plus Jakarta Sans','Carlito',sans-serif;font-size:clamp(2.4rem,5.8vw,4.2rem);line-height:1.12;letter-spacing:-.02em;max-width:1060px;margin-bottom:16px;font-weight:800;color:#e6edf3}
 .hero h1 em{font-style:normal;background:linear-gradient(135deg,#58a6ff,#bc8cff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none}
-.hero .authors{color:rgba(230,237,243,.35);font-size:.88rem;margin:0 auto 2rem}
+.hero .authors{color:rgba(230,237,243,.55);font-size:.95rem;margin:0 auto .5rem;line-height:1.8}
+.hero .authors a{color:rgba(230,237,243,.75);text-decoration:none;border-bottom:1px solid transparent;transition:all .2s}
+.hero .authors a:hover{color:#58a6ff;border-bottom-color:#58a6ff}
+.hero .authors sup{font-size:.65em;margin-left:1px}
+.hero .affiliations{color:rgba(230,237,243,.35);font-size:.8rem;margin:0 auto 1.5rem}
+.hero .affiliations sup{font-size:.7em;margin-right:1px}
+.hero .corresponding{color:rgba(230,237,243,.25);font-size:.72rem;margin:0 auto .8rem}
 
 /* ───────── Hero Teaser ───────── */
 .hero-teaser{max-width:1280px;width:100%;margin-top:2.5rem}
@@ -201,7 +207,20 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
 <section class="hero" id="hero">
   <div class="hero-dots"></div>
   <h1 class="hero-anim d1"><em>DIAL:</em> <em>D</em>ecoupling <em>I</em>ntent and <em>A</em>ction via <em>L</em>atent World Modeling for End-to-End VLA</h1>
-  <p class="authors hero-anim d2">Authors (placeholder)</p>
+  <p class="authors hero-anim d2">
+    <a href="https://scholar.google.com/citations?user=3ep5ODoAAAAJ">Yi Chen</a><sup>1</sup> &nbsp;
+    <a href="https://geyuying.github.io/">Yuying Ge</a><sup>2&dagger;</sup> &nbsp;
+    <a href="https://scholar.google.com/citations?user=i35tdbMAAAAJ">Hui Zhou</a><sup>2</sup> &nbsp;
+    <a href="https://dingmyu.github.io/">Mingyu Ding</a><sup>3</sup> &nbsp;
+    <a href="https://geyixiao.com/">Yixiao Ge</a><sup>2</sup> &nbsp;
+    <a href="https://xh-liu.github.io/">Xihui Liu</a><sup>1&dagger;</sup>
+  </p>
+  <p class="affiliations hero-anim d2">
+    <sup>1</sup>The University of Hong Kong &nbsp;&nbsp;
+    <sup>2</sup>XPENG Robotics &nbsp;&nbsp;
+    <sup>3</sup>University of North Carolina at Chapel Hill
+  </p>
+  <p class="corresponding hero-anim d2">&dagger;Corresponding Authors</p>
   <div class="hero-teaser hero-anim d3">
     <video id="teaser-video" src="videos/teaser_last3s.mp4" poster="figures/teaser_poster.jpg" autoplay loop muted playsinline controls></video>
   </div>
@@ -418,10 +437,6 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
   <div class="section-inner reveal">
     <h2 class="section-title">Where do we go from here?</h2>
     <div class="blog-text">
-      <!-- <p>We showed that decoupling a VLM&rsquo;s <em>intent</em> from the policy&rsquo;s <em>actions</em> through a latent world modeling bottleneck yields a VLA that is both data-efficient and broadly generalizable. DIAL achieves state-of-the-art results in simulation, transfers to real-world humanoid manipulation, and learns useful priors from human demonstrations&mdash;all without sacrificing the VLM&rsquo;s pre-trained knowledge.</p>
-
-      <p>There is plenty left to explore. Scaling up the action decoder, compressing latent tokens for efficiency, fine-tuning the ViT encoder end-to-end with EMA stabilization, and extending to action-free video data are all promising directions. Looking further ahead, we believe that latent world modeling should be integrated into VLM <em>pre-training</em> itself, producing foundation models that natively think in terms of physical state transitions. On the control side, modular System-1 experts could be hot-swapped for different robots while sharing a single System-2 brain&mdash;a step toward truly universal embodied intelligence.</p> -->
-    
       <p>We demonstrated that decoupling a VLM&rsquo;s <em>cognitive intent</em> from a policy&rsquo;s <em>physical actions</em> via latent world modeling yields a highly data-efficient and generalizable VLA. DIAL achieves state-of-the-art results in simulation and seamlessly transfers to real-world humanoid manipulation. Its two-stage training paradigm allows action-aware gradients to refine the VLM in a controlled manner, avoiding the representation collapse that commonly plagues naive end-to-end VLA training.</p>
 
       <p>Several directions can extend this framework. On the architecture side, scaling up System-1&rsquo;s capacity, compressing latent tokens for efficiency, and fine-tuning the ViT encoder end-to-end are natural next steps. On the data side, DIAL&rsquo;s predictive objective is well-suited to leverage massive, <em>action-free</em> human videos, since latent world modeling requires only visual observations and no action labels.</p>
@@ -432,19 +447,19 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
 </section>
 
 <!-- ════════════════ CITATION ════════════════ -->
-<section class="section alt" id="bibtex">
+<!-- <section class="section alt" id="bibtex">
   <div class="section-inner reveal">
     <h2 class="section-title">Citation</h2>
     <div class="bibtex-wrap">
       <button class="bibtex-copy" id="bib-copy-btn">Copy</button>
-      <pre id="bib-text">@inproceedings{dial2025,
+      <pre id="bib-text">@inproceedings{dial2026,
   title     = {DIAL: Decoupling Intent and Action via Latent World Modeling for End-to-End VLA},
   author    = {Authors (placeholder)},
-  year      = {2025}
+  year      = {2026}
 }</pre>
     </div>
   </div>
-</section>
+</section> -->
 
 <!-- ════════════════ FOOTER ════════════════ -->
 <footer>
