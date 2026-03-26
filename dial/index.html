@@ -222,7 +222,7 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
   </p>
   <p class="corresponding hero-anim d2">&dagger;Corresponding Authors</p>
   <div class="hero-teaser hero-anim d3">
-    <video id="teaser-video" src="videos/teaser_live_dark.mp4" poster="figures/teaser_poster.jpg" autoplay loop muted playsinline controls></video>
+    <video id="teaser-video" src="videos/teaser_last3s.mp4" poster="figures/teaser_poster.jpg" autoplay loop muted playsinline controls></video>
   </div>
 </section>
 
@@ -500,13 +500,16 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
   document.querySelectorAll('.reveal').forEach(function(el){ revealObs.observe(el); });
 
   /* ── BibTeX copy ── */
-  document.getElementById('bib-copy-btn').addEventListener('click', function(){
-    var btn = this;
-    navigator.clipboard.writeText(document.getElementById('bib-text').textContent).then(function(){
-      btn.textContent = 'Copied!'; btn.classList.add('copied');
-      setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  var bibBtn = document.getElementById('bib-copy-btn');
+  if(bibBtn){
+    bibBtn.addEventListener('click', function(){
+      var btn = this;
+      navigator.clipboard.writeText(document.getElementById('bib-text').textContent).then(function(){
+        btn.textContent = 'Copied!'; btn.classList.add('copied');
+        setTimeout(function(){ btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
     });
-  });
+  }
 
   /* ── Helpers ── */
   function makeSimCard(filename){
@@ -675,11 +678,20 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
     teaserV.playbackRate = 2.0;
     teaserV.addEventListener('loadedmetadata', function(){ this.playbackRate = 2.0; });
 
-    fetch('videos/teaser_live_dark.mp4')
-      .then(function(r){ return r.blob(); })
-      .then(function(blob){
-        var blobUrl = URL.createObjectURL(blob);
-        teaserV.src = blobUrl;
+    var fullVideo = document.createElement('video');
+    fullVideo.preload = 'auto';
+    fullVideo.muted = true;
+    fullVideo.setAttribute('playsinline','');
+    fullVideo.style.cssText = 'position:fixed;top:-9999px;left:-9999px;width:1px;height:1px;visibility:hidden';
+    document.body.appendChild(fullVideo);
+    fullVideo.src = 'videos/teaser_live_dark.mp4';
+    fullVideo.load();
+
+    var checker = setInterval(function(){
+      if(fullVideo.readyState >= 3){
+        clearInterval(checker);
+        teaserV.pause();
+        teaserV.src = 'videos/teaser_live_dark.mp4';
         teaserV.load();
         teaserV.addEventListener('loadedmetadata', function onFull(){
           teaserV.removeEventListener('loadedmetadata', onFull);
@@ -688,8 +700,9 @@ footer::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;
           teaserV.currentTime = 0;
           teaserV.play().catch(function(){});
         });
-      })
-      .catch(function(){});
+        fullVideo.parentNode.removeChild(fullVideo);
+      }
+    }, 500);
   }
 
   /* ── Model overview video: pause 10s then replay ── */
